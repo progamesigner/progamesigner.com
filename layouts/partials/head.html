@@ -1,0 +1,137 @@
+<!doctype html>
+<html amp lang="{{ .Language }}">
+<head itemscope itemtype="http://schema.org/Article">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <title>{{ .Site.Title }}</title>
+
+	<meta name="description" content="{{ .Site.Params.Description }}">
+    <meta name="keywords" content="{{ .Site.Params.Keywords }}">
+    <meta name="author" content="progamesigner (progamesigner@outlok.com)">
+
+    <meta property="og:title" itemprop="name" content="{{ .Site.Title }}">
+    <meta property="og:site_name" content="{{ .Site.Title }}">
+    <meta property="og:description" itemprop="description" content="{{ .Site.Params.Description }}">
+    <meta property="og:image" content="{{ .Site.BaseURL }}favicon.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:url" content="{{ .Site.BaseURL }}">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ .Site.Title }}">
+    <meta name="twitter:site" content="{{ .Site.Title }}">
+    <meta name="twitter:description" content="{{ .Site.Params.Description }}">
+    <meta name="twitter:image" content="{{ .Site.BaseURL }}favicon.png">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="{{ .Site.Title }}">
+    <meta name="msapplication-TileColor" content="#FFC800">
+    <meta name="msapplication-TileImage" content="{{ .Site.BaseURL }}favicon.png">
+    <meta name="msapplication-square70x70logo" content="{{ .Site.BaseURL }}favicon-70.png">
+    <meta name="msapplication-square150x150logo" content="{{ .Site.BaseURL }}favicon-150.png">
+    <meta name="msapplication-wide310x150logo" content="{{ .Site.BaseURL }}favicon-wide.png">
+    <meta name="msapplication-square310x310logo" content="{{ .Site.BaseURL }}favicon-310.png">
+    <meta name="msapplication-starturl" content="{{ .Site.BaseURL }}">
+
+    {{ .Hugo.Generator }}
+
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Webpage",
+            "url": "{{ .Permalink }}l",
+            "name": "Progamesigner",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "{{ .Permalink }}"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Progamesigner",
+                "sameAs": [
+                    "https://twitter.com/progamesigner",
+                    "https://www.linkedin.com/in/progamesigner"
+                ],
+                "logo": {
+                    "url": "{{ .Site.BaseURL }}favicon.png",
+                    "width": 512,
+                    "height": 512,
+                    "@type": "ImageObject"
+                }
+            }
+        }
+    </script>
+
+    <link rel="shortcut icon" href="{{ .Site.BaseURL }}favicon.png">
+    <link rel="canonical" href="{{ .Permalink }}">
+    {{ range .Translations }}
+        <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}">
+    {{ end}}
+
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ .Site.BaseURL }}favicon-120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ .Site.BaseURL }}favicon-152.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="{{ .Site.BaseURL }}favicon-167.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ .Site.BaseURL }}favicon-180.png">
+    <link itemprop="image" href="{{ .Site.BaseURL }}favicon.png">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Noto+Serif:400,700">
+
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+
+    <style amp-custom>
+        {{ partial "style.min.css" . | safeCSS }}
+    </style>
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+</head>
+
+<body>
+<amp-analytics type="googleanalytics">
+    <script type="application/json">
+        {
+            "vars": {
+                "account": "{{ .Site.GoogleAnalytics }}"
+            },
+            "triggers": {
+                "pageview": {
+                    "on": "visible",
+                    "request": "pageview"
+                }
+            }
+        }
+    </script>
+</amp-analytics>
+
+<header>
+    <div class="section">
+        <nav class="navbar">
+            <div class="navbar-start">
+                <a class="navbar-item" href="{{ .Site.BaseURL }}">
+                    <amp-img
+                        alt="Yang Sheng Han"
+                        height="1"
+                        src="{{ .Site.BaseURL }}photo.png"
+                        width="1"
+                        layout="responsive"
+                    ></amp-img>
+                </a>
+            </div>
+
+            <div class="navbar-end">
+                {{ range .Translations.ByWeight.Reverse }}
+                    <a class="navbar-item" href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+                {{ end }}
+            </div>
+        </nav>
+
+        <div class="heading">
+            <h2 class="title">{{ .Site.Params.Heading }}</h2>
+            <h3 class="subtitle">{{ .Site.Params.Subheading }}</h3>
+        </div>
+    </div>
+</header>
+
+<main>

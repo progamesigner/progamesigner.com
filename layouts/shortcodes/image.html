@@ -1,0 +1,8 @@
+<amp-img
+    alt="{{ .Get "name" }}"
+    height="{{ if .Get "height" }}{{ .Get "height" }}{{ else }}1{{ end }}"
+    src="{{ .Site.BaseURL }}{{ .Get "image" }}"
+    width="{{ if .Get "width" }}{{ .Get "width" }}{{ else }}1{{ end }}"
+    layout="responsive"
+></amp-img>
+
