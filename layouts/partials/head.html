@@ -91,7 +91,6 @@
         }
     </script>
 
-    <link rel="shortcut icon" href="{{ .Site.BaseURL }}favicon.png">
     <link rel="canonical" href="{{ .Permalink }}">
     {{ range .Translations }}
         <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}">
@@ -101,7 +100,7 @@
     <link rel="apple-touch-icon" sizes="152x152" href="{{ .Site.BaseURL }}favicon-152.png">
     <link rel="apple-touch-icon" sizes="167x167" href="{{ .Site.BaseURL }}favicon-167.png">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ .Site.BaseURL }}favicon-180.png">
-    <link href="{{ .Site.BaseURL }}favicon.png">
+    <link rel="shortcut icon" href="{{ .Site.BaseURL }}favicon.png">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Noto+Serif:400,700">
 
