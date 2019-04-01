@@ -31,7 +31,6 @@ $navbar-item-color: $link;
 
 @import '~bulma/sass/base/minireset';
 @import '~bulma/sass/base/generic';
-@import '~bulma/sass/base/helpers';
 
 @import '~bulma/sass/grid/columns';
 
@@ -140,6 +139,14 @@ ul {
 
 .navbar {
     background-color: transparent;
+
+    a {
+        &.navbar-item {
+            &:hover {
+                background-color: transparent;
+            }
+        }
+    }
 }
 
 .buttons {
@@ -190,4 +197,8 @@ ul {
             width: 64px;
         }
     }
+}
+
+.has-text-centered {
+    text-align: center;
 }
