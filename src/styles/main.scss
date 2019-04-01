@@ -17,13 +17,13 @@ $button-active-color: $link-hover;
 $button-active-border-color: transparent;
 $button-focus-color: $link-hover;
 $button-focus-border-color: transparent;
+$button-focus-box-shadow-color: transparent;
+$button-hover-color: $link-hover;
 $button-hover-border-color: transparent;
 $navbar-item-color: $link;
 
 @import '~bulma/sass/utilities/initial-variables';
 @import '~bulma/sass/utilities/functions';
-
-
 @import '~bulma/sass/utilities/derived-variables';
 @import '~bulma/sass/utilities/animations';
 @import '~bulma/sass/utilities/mixins';
@@ -177,7 +177,7 @@ ul {
 }
 
 .image {
-    img {
+    amp-img {
         border-radius: 50%;
     }
 

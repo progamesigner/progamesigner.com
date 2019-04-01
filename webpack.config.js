@@ -13,7 +13,38 @@ module.exports = {
                 test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                require('@fullhuman/postcss-purgecss')({
+                                    content: [
+                                        './**/*.html'
+                                    ],
+                                    keyframes: true,
+                                    fontFace: true
+                                }),
+                                require('cssnano')({
+                                    preset: [
+                                        'default',
+                                        {
+                                            autoprefixer: {
+                                            },
+                                            discardComments: {
+                                                removeAll: true
+                                            }
+                                        }
+                                    ]
+                                })
+                            ]
+                        }
+                    },
                     'sass-loader'
                 ]
             }
