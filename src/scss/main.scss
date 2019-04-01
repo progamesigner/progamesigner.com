@@ -49,13 +49,24 @@ a {
     transition: background-color $speed $easing, color $speed $easing;
 }
 
-h3 {
+h4 {
     font-weight: $weight-bold;
 }
 
 footer {
     background-color: $section-alternative-background;
     text-align: center;
+
+    ul {
+        display: inline-block;
+    }
+
+    li {
+        float: left;
+        height: 32px;
+        margin: 0.5rem;
+        width: 32px;
+    }
 }
 
 header {
@@ -121,19 +132,6 @@ ul {
     font-style: italic;
 }
 
-.links {
-    ul {
-        display: inline-block;
-    }
-
-    li {
-        float: left;
-        height: 32px;
-        margin: 0.5rem;
-        width: 32px;
-    }
-}
-
 .name,
 .job {
     display: block;
@@ -142,15 +140,6 @@ ul {
 
 .navbar {
     background-color: transparent;
-
-    .image {
-        height: 64px;
-        width: 64px;
-
-        img {
-            border-radius: 50%;
-        }
-    }
 }
 
 .buttons {
@@ -172,57 +161,33 @@ ul {
 }
 
 .section {
-    @extend .container;
-
     padding: 3rem 1.5rem;
+
+    &.is-alternative {
+        background: $section-alternative-background;
+    }
+
+    ul {
+        &.is-list {
+            list-style: disc inside;
+            padding-left: 2.5rem;
+            text-align: left;
+        }
+    }
 }
 
-.section-profile {
-    .image {
+.image {
+    img {
+        border-radius: 50%;
+    }
+
+    &.is-profile {
         height: 128px;
         width: 128px;
 
-        img {
-            border-radius: 50%;
-        }
-    }
-}
-
-.section-services {
-    background: $section-alternative-background;
-
-    ul {
-        list-style: disc inside;
-        padding-left: 2.5rem;
-        text-align: left;
-    }
-}
-
-.section-services,
-.section-contacts {
-    .section {
-        text-align: center;
-    }
-}
-
-@media screen and (min-width: 769px), print {
-    .section-profile {
-        .column {
-            flex-basis: calc(100% - 240px);
-
-            &:last-child {
-                flex-basis: 240px;
-            }
-        }
-    }
-
-    .section-services {
-        .columns {
-            flex-wrap: wrap;
-        }
-
-        .column {
-            flex-basis: 50%;
+        &.is-small {
+            height: 64px;
+            width: 64px;
         }
     }
 }

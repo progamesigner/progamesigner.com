@@ -140,34 +140,36 @@
             layout="responsive"
         ></amp-img>
     </div>
-    <div class="section">
-        <nav class="navbar is-transparent">
-            <div class="navbar-start">
-                <a class="navbar-item" href="{{ .Site.BaseURL }}">
-                    <figure class="image">
-                        <amp-img
-                            alt="Yang Sheng Han"
-                            height="1"
-                            src="{{ .Site.BaseURL }}photo.png"
-                            width="1"
-                            layout="responsive"
-                        ></amp-img>
-                    </figure>
-                </a>
-            </div>
+    <section class="section">
+        <div class="container">
+            <nav class="navbar is-transparent">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="{{ .Site.BaseURL }}">
+                        <figure class="image is-profile is-small">
+                            <amp-img
+                                alt="Yang Sheng Han"
+                                height="1"
+                                src="{{ .Site.BaseURL }}photo.png"
+                                width="1"
+                                layout="responsive"
+                            ></amp-img>
+                        </figure>
+                    </a>
+                </div>
 
-            <div class="navbar-end">
-                {{ range .Translations.ByWeight.Reverse }}
-                    <a class="navbar-item" href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
-                {{ end }}
-            </div>
-        </nav>
+                <div class="navbar-end">
+                    {{ range .Translations.ByWeight.Reverse }}
+                        <a class="navbar-item" href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+                    {{ end }}
+                </div>
+            </nav>
 
-        <div class="heading">
-            <h2 class="title">{{ .Site.Params.Heading }}</h2>
-            <h3 class="subtitle">{{ .Site.Params.Subheading }}</h3>
+            <div class="heading">
+                <h2 class="title">{{ .Site.Params.Heading }}</h2>
+                <h3 class="subtitle">{{ .Site.Params.Subheading }}</h3>
+            </div>
         </div>
-    </div>
+    </section>
 </header>
 
 <main>

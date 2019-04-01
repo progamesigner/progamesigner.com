@@ -14,20 +14,20 @@
         "en": {
             "copyright": "Yang Sheng Han",
             "languageName": "English",
-            "title": "Progamesigner - a web developer",
+            "title": "Progamesigner - a developer",
             "heading": "Hello,",
             "subheading": "I'm progamesigner.",
-            "description": "The portfolio of Yang Sheng Han, a web developer based in Taipei, Taiwan.",
-            "keywords": "Yang Sheng Han, progamesigner, web design, web develop, websites, developer, freelance"
+            "description": "The portfolio of Yang Sheng Han, a developer based in Taipei, Taiwan.",
+            "keywords": "Yang Sheng Han, progamesigner, developer"
         },
         "zh-tw": {
             "copyright": "Yang Sheng Han",
             "languageName": "中文",
-            "title": "Progamesigner - 網頁開發者",
+            "title": "Progamesigner - 開發者",
             "heading": "Hello,",
             "subheading": "I'm progamesigner.",
-            "description": "Yang Sheng Han的個人網站，在台北的網頁開發者。",
-            "keywords": "Yang Sheng Han, progamesigner, web design, web develop, websites, developer, freelance, 網站, 網頁設計, 開發, 自由業, 接案"
+            "description": "Yang Sheng Han的個人網站，在台北的開發者。",
+            "keywords": "Yang Sheng Han, progamesigner, developer, 開發"
         }
     }
 }
