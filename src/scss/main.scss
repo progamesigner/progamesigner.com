@@ -1,0 +1,228 @@
+$link: #FFC800;
+$link-hover: #FFA800;
+$text: #000000;
+$speed: 240ms;
+$easing: ease-in-out;
+
+$family-sans-serif: 'Noto Sans', 'Noto Sans TC', sans-serif;
+$family-serif: 'Noto Serif', 'Noto Serif TC', serif;
+
+$section-alternative-background: #FAFAFA;
+$subtitle-size: 2.25rem;
+$title-size: 3rem;
+
+$button-color: $link;
+$button-border-color: transparent;
+$button-active-color: $link-hover;
+$button-active-border-color: transparent;
+$button-focus-color: $link-hover;
+$button-focus-border-color: transparent;
+$button-hover-border-color: transparent;
+$navbar-item-color: $link;
+
+@import '~bulma/sass/utilities/initial-variables';
+@import '~bulma/sass/utilities/functions';
+
+
+@import '~bulma/sass/utilities/derived-variables';
+@import '~bulma/sass/utilities/animations';
+@import '~bulma/sass/utilities/mixins';
+@import '~bulma/sass/utilities/controls';
+
+@import '~bulma/sass/base/minireset';
+@import '~bulma/sass/base/generic';
+@import '~bulma/sass/base/helpers';
+
+@import '~bulma/sass/grid/columns';
+
+@import '~bulma/sass/layout/footer';
+
+@import '~bulma/sass/elements/button';
+@import '~bulma/sass/elements/container';
+@import '~bulma/sass/elements/icon';
+@import '~bulma/sass/elements/title';
+
+@import '~bulma/sass/components/navbar';
+
+a {
+    font-weight: $weight-bold;
+    transition: background-color $speed $easing, color $speed $easing;
+}
+
+h3 {
+    font-weight: $weight-bold;
+}
+
+footer {
+    background-color: $section-alternative-background;
+    text-align: center;
+}
+
+header {
+    background-color: $section-alternative-background;
+    height: 100vh;
+    position: relative;
+    text-align: center;
+    width: 100%;
+
+    .section {
+        padding-top: 0;
+    }
+}
+
+p,
+ul {
+    font-family: $family-serif;
+    margin-bottom: 0.5rem;
+}
+
+.background {
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    z-index: 0;
+
+    amp-img {
+        margin-top: -25%;
+    }
+}
+
+.heading {
+    padding: 25vh 0;
+}
+
+.title {
+    & + .subtitle {
+        margin-top: -1.5rem;
+    }
+}
+
+.icon {
+    display: block;
+}
+
+.image {
+    margin: 0 auto;
+
+    amp-img {
+        display: block;
+        height: auto;
+        width: 100%;
+    }
+}
+
+.job {
+    color: $grey-darker;
+    font-size: $size-7;
+    font-style: italic;
+}
+
+.links {
+    ul {
+        display: inline-block;
+    }
+
+    li {
+        float: left;
+        height: 32px;
+        margin: 0.5rem;
+        width: 32px;
+    }
+}
+
+.name,
+.job {
+    display: block;
+    text-align: center;
+}
+
+.navbar {
+    background-color: transparent;
+
+    .image {
+        height: 64px;
+        width: 64px;
+
+        img {
+            border-radius: 50%;
+        }
+    }
+}
+
+.buttons {
+    margin-top: 1rem;
+}
+
+.button {
+    &.is-large {
+        background-color: $link;
+        color: $grey-darker;
+        margin-top: 1.5rem;
+        padding: 1rem 2rem;
+        text-transform: uppercase;
+
+        &:hover {
+            background-color: $link-hover;
+        }
+    }
+}
+
+.section {
+    @extend .container;
+
+    padding: 3rem 1.5rem;
+}
+
+.section-profile {
+    .image {
+        height: 128px;
+        width: 128px;
+
+        img {
+            border-radius: 50%;
+        }
+    }
+}
+
+.section-services {
+    background: $section-alternative-background;
+
+    ul {
+        list-style: disc inside;
+        padding-left: 2.5rem;
+        text-align: left;
+    }
+}
+
+.section-services,
+.section-contacts {
+    .section {
+        text-align: center;
+    }
+}
+
+@media screen and (min-width: 769px), print {
+    .section-profile {
+        .column {
+            flex-basis: calc(100% - 240px);
+
+            &:last-child {
+                flex-basis: 240px;
+            }
+        }
+    }
+
+    .section-services {
+        .columns {
+            flex-wrap: wrap;
+        }
+
+        .column {
+            flex-basis: 50%;
+        }
+    }
+}
