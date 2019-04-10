@@ -106,6 +106,7 @@
 
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+    <script async custom-element="amp-user-notification" src="https://cdn.ampproject.org/v0/amp-user-notification-0.1.js"></script>
 
     <style amp-custom>
         {{ partial "main.min.css" . | safeCSS }}
@@ -128,6 +129,18 @@
         }
     </script>
 </amp-analytics>
+
+<amp-user-notification
+    id="cookie-consent-notification"
+    class="notification"
+    layout="nodisplay"
+>
+    <p>This site uses <a href="https://analytics.google.com/">Google Analytics</a> to analyze traffic.</p>
+    <button
+        class="button"
+        on="tap:cookie-consent-notification.dismiss"
+    >Got It</button>
+</amp-user-notification>
 
 <header>
     <div class="background">

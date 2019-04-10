@@ -21,6 +21,7 @@ $button-focus-box-shadow-color: transparent;
 $button-hover-color: $link-hover;
 $button-hover-border-color: transparent;
 $navbar-item-color: $link;
+$notification-radius: 0;
 
 @import '~bulma/sass/utilities/initial-variables';
 @import '~bulma/sass/utilities/functions';
@@ -39,6 +40,7 @@ $navbar-item-color: $link;
 @import '~bulma/sass/elements/button';
 @import '~bulma/sass/elements/container';
 @import '~bulma/sass/elements/icon';
+@import '~bulma/sass/elements/notification';
 @import '~bulma/sass/elements/title';
 
 @import '~bulma/sass/components/navbar';
@@ -195,6 +197,27 @@ ul {
         &.is-small {
             height: 64px;
             width: 64px;
+        }
+    }
+}
+
+.notification {
+    align-items: center;
+    background-color: $section-alternative-background;
+    display: flex;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+        margin-bottom: 0;
+    }
+
+    .button {
+        background-color: $link;
+        color: $text;
+        transition: background-color $speed $easing;
+
+        &:hover {
+            background-color: $link-hover;
         }
     }
 }
