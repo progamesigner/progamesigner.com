@@ -8,7 +8,7 @@ The website source code for progamesigner.com.
 
 ### Prerequisites
 
-Website built with [Hugo](http://gohugo.io/) 0.54.0 and styles are bundled via webpack 4.
+Website built with [Hugo](http://gohugo.io/) and styles are bundled via webpack.
 
 ```
 npm install # install required Node modules including webpack
@@ -17,8 +17,8 @@ npm install # install required Node modules including webpack
 ### Start local server
 
 ```
-hugo serve
-npm run watch
+npm run build:watch
+npm run hugo:watch
 ```
 
 ## Deployment

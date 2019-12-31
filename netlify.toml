@@ -1,6 +1,6 @@
 [build]
   base = "/"
-  command = "npm run build && hugo --environment production --enableGitInfo --minify"
+  command = "npm run deploy:prod"
   publish = "public"
 
 [build.environment]
