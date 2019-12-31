@@ -7,6 +7,8 @@
 
     <title>{{ .Site.Title }}</title>
 
+    {{ hugo.Generator }}
+
 	<meta name="description" content="{{ .Site.Params.Description }}">
     <meta name="keywords" content="{{ .Site.Params.Keywords }}">
     <meta name="author" content="progamesigner (progamesigner@outlook.com)">
@@ -35,8 +37,6 @@
     <meta name="msapplication-wide310x150logo" content="{{ .Site.BaseURL }}favicon-wide.png">
     <meta name="msapplication-square310x310logo" content="{{ .Site.BaseURL }}favicon-310.png">
     <meta name="msapplication-starturl" content="{{ .Site.BaseURL }}">
-
-    {{ .Hugo.Generator }}
 
     <script type="application/ld+json">
         {
