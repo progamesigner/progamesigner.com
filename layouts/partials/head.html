@@ -42,11 +42,11 @@
         {
             "@context": "http://schema.org",
             "@type": "Webpage",
-            "url": "{{ .Permalink }}",
+            "url": {{ .Permalink }},
             "name": "Progamesigner",
             "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "{{ .Permalink }}"
+                "@id": {{ .Permalink }}
             },
             "publisher": {
                 "@type": "Organization",
@@ -57,7 +57,7 @@
                 ],
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "{{ .Site.BaseURL }}favicon.png"
+                    "url": {{ .Site.BaseURL | printf "%sfavicon.png" }}
                 }
             }
         }
@@ -67,15 +67,15 @@
             "@context": "http://schema.org",
             "@type": "Article",
             "author": "progamesigner (progamesigner@outlook.com)",
-            "headline": "{{ .Site.Title }}",
-            "description": "{{ .Site.Params.Description }}",
+            "headline": {{ .Site.Title }},
+            "description": {{ .Site.Params.Description }},
             "mainEntityOfPage": {
                 "@type": "WebPage",
-                "@id": "{{ .Permalink }}"
+                "@id": {{ .Permalink }},
             },
-            "image": "{{ .Site.BaseURL }}favicon.png",
-            "datePublished": "{{ now.Format "2006-01-02T15:04:05-07:00" }}",
-            "dateModified": "{{ now.Format "2006-01-02T15:04:05-07:00" }}",
+            "image": {{ .Site.BaseURL | printf "%sfavicon.png" }},
+            "datePublished": {{ now.Format "2006-01-02T15:04:05-07:00" }},
+            "dateModified": {{ now.Format "2006-01-02T15:04:05-07:00" }},
             "publisher": {
                 "@type": "Organization",
                 "name": "Progamesigner",
@@ -85,7 +85,7 @@
                 ],
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "{{ .Site.BaseURL }}favicon.png"
+                    "url": {{ .Site.BaseURL | printf "%sfavicon.png" }}
                 }
             }
         }
