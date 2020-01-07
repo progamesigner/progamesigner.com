@@ -16,27 +16,27 @@
     <meta property="og:title" content="{{ .Site.Title }}">
     <meta property="og:site_name" content="{{ .Site.Title }}">
     <meta property="og:description" content="{{ .Site.Params.Description }}">
-    <meta property="og:image" content="{{ .Site.BaseURL }}favicon.png">
+    <meta property="og:image" content="{{ "favicon.png" | absURL }}">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
-    <meta property="og:url" content="{{ .Site.BaseURL }}">
+    <meta property="og:url" content="{{ .Permalink }}">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ .Site.Title }}">
     <meta name="twitter:site" content="{{ .Site.Title }}">
     <meta name="twitter:description" content="{{ .Site.Params.Description }}">
-    <meta name="twitter:image" content="{{ .Site.BaseURL }}favicon.png">
+    <meta name="twitter:image" content="{{ "favicon.png" | absURL }}">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="{{ .Site.Title }}">
     <meta name="msapplication-TileColor" content="#FFC800">
-    <meta name="msapplication-TileImage" content="{{ .Site.BaseURL }}favicon.png">
-    <meta name="msapplication-square70x70logo" content="{{ .Site.BaseURL }}favicon-70.png">
-    <meta name="msapplication-square150x150logo" content="{{ .Site.BaseURL }}favicon-150.png">
-    <meta name="msapplication-wide310x150logo" content="{{ .Site.BaseURL }}favicon-wide.png">
-    <meta name="msapplication-square310x310logo" content="{{ .Site.BaseURL }}favicon-310.png">
-    <meta name="msapplication-starturl" content="{{ .Site.BaseURL }}">
+    <meta name="msapplication-TileImage" content="{{ "favicon.png" | absURL }}">
+    <meta name="msapplication-square70x70logo" content="{{ "favicon-70.png" | absURL }}">
+    <meta name="msapplication-square150x150logo" content="{{ "favicon-150.png" | absURL }}">
+    <meta name="msapplication-wide310x150logo" content="{{ "favicon-wide.png" | absURL }}">
+    <meta name="msapplication-square310x310logo" content="{{ "favicon-310.png" | absURL }}">
+    <meta name="msapplication-starturl" content="{{ .Site.Home.Permalink }}">
 
     <script type="application/ld+json">
         {
@@ -57,7 +57,7 @@
                 ],
                 "logo": {
                     "@type": "ImageObject",
-                    "url": {{ .Site.BaseURL | printf "%sfavicon.png" }}
+                    "url": {{ "favicon.png" | absURL }}
                 }
             }
         }
@@ -73,7 +73,7 @@
                 "@type": "WebPage",
                 "@id": {{ .Permalink }},
             },
-            "image": {{ .Site.BaseURL | printf "%sfavicon.png" }},
+            "image": {{ "favicon.png" | absURL }},
             "datePublished": {{ now.Format "2006-01-02T15:04:05-07:00" }},
             "dateModified": {{ now.Format "2006-01-02T15:04:05-07:00" }},
             "publisher": {
@@ -85,7 +85,7 @@
                 ],
                 "logo": {
                     "@type": "ImageObject",
-                    "url": {{ .Site.BaseURL | printf "%sfavicon.png" }}
+                    "url": {{ "favicon.png" | absURL }}
                 }
             }
         }
@@ -96,11 +96,11 @@
         <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}">
     {{ end}}
 
-    <link rel="apple-touch-icon" sizes="120x120" href="{{ .Site.BaseURL }}favicon-120.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{ .Site.BaseURL }}favicon-152.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="{{ .Site.BaseURL }}favicon-167.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ .Site.BaseURL }}favicon-180.png">
-    <link rel="shortcut icon" href="{{ .Site.BaseURL }}favicon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ "favicon-120.png" | absURL }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ "favicon-152.png" | absURL }}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{{ "favicon-167.png" | absURL }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ "favicon-180.png" | absURL }}">
+    <link rel="shortcut icon" href="{{ "favicon.png" | absURL }}">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Noto+Sans|Noto+Serif+TC|Noto+Serif&display=swap">
 
@@ -144,27 +144,15 @@
 
 <header>
     <div class="background">
-        <amp-img
-            alt="{{ .Site.Title }}"
-            height="1"
-            src="{{ .Site.BaseURL }}header.png"
-            width="1"
-            layout="responsive"
-        ></amp-img>
+        {{ dict "name" .Site.Title "image" "header.png" | partial "image" }}
     </div>
     <section class="section">
         <div class="container">
             <nav class="navbar">
                 <div class="navbar-start">
-                    <a class="navbar-item" href="{{ .Site.BaseURL }}">
+                    <a class="navbar-item" href="{{ .Site.Home.RelPermalink }}">
                         <figure class="image is-profile is-small">
-                            <amp-img
-                                alt="Yang Sheng Han"
-                                height="1"
-                                src="{{ .Site.BaseURL }}photo.png"
-                                width="1"
-                                layout="responsive"
-                            ></amp-img>
+                            {{ dict "name" "Yang Sheng Han" "image" "photo.png" | partial "image" }}
                         </figure>
                     </a>
                 </div>

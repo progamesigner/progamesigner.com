@@ -6,63 +6,33 @@
             <ul>
                 <li>
                     <a href="https://0x148.com">
-                        <amp-img
-                            alt="Blog"
-                            height="1"
-                            src="{{ .Site.BaseURL }}blog.png"
-                            width="1"
-                            layout="responsive"
-                        ></amp-img>
+                        {{ dict "name" "Blog" "image" "blog.png" | partial "image" }}
                     </a>
                 </li>
                 <li>
                     <a href="https://github.com/progamesigner">
-                        <amp-img
-                            alt="GitHub"
-                            height="1"
-                            src="{{ .Site.BaseURL }}github.png"
-                            width="1"
-                            layout="responsive"
-                        ></amp-img>
+                        {{ dict "name" "GitHub" "image" "github.png" | partial "image" }}
                     </a>
                 </li>
                 <li>
                     <a href="https://twitter.com/progamesigner">
-                        <amp-img
-                            alt="Twitter"
-                            height="1"
-                            src="{{ .Site.BaseURL }}twitter.png"
-                            width="1"
-                            layout="responsive"
-                        ></amp-img>
+                        {{ dict "name" "Twitter" "image" "twitter.png" | partial "image" }}
                     </a>
                 </li>
                 <li>
                     <a href="https://www.linkedin.com/in/progamesigner">
-                        <amp-img
-                            alt="LinkedIn"
-                            height="1"
-                            src="{{ .Site.BaseURL }}linkedin.png"
-                            width="1"
-                            layout="responsive"
-                        ></amp-img>
+                        {{ dict "name" "LinkedIn" "image" "linkedin.png" | partial "image" }}
                     </a>
                 </li>
                 <li>
                     <a href="mailto:progamesigner@outlook.com">
-                        <amp-img
-                            alt="Hire Me"
-                            height="1"
-                            src="{{ .Site.BaseURL }}email.png"
-                            width="1"
-                            layout="responsive"
-                        ></amp-img>
+                        {{ dict "name" "Hire Me" "image" "email.png" | partial "image" }}
                     </a>
                 </li>
             </ul>
         </div>
 
-        <p>&copy; {{ now.Format "2006" }} <a href="{{ .Site.BaseURL }}">{{ .Site.Copyright }}</a>. All rights reserved.</p>
+        <p>&copy; {{ now.Format "2006" }} <a href="{{ .Site.Home.Permalink }}">{{ .Site.Copyright }}</a>. All rights reserved.</p>
     </div>
 </footer>
 

@@ -1,0 +1,22 @@
+{{- $image := "image" | index . | resources.Get | fingerprint "sha512" -}}
+{{- $name := "name" | index . -}}
+{{- $width := "width" | index . | default 1 -}}
+{{- $height := "height" | index . | default 1 -}}
+
+<amp-img
+    alt="{{ $name }}"
+    height="{{ $height }}"
+    src="{{ $image.RelPermalink }}"
+    width="{{ $width }}"
+    layout="responsive"
+>
+    <amp-img
+    alt="{{ $name }}"
+        fallback
+        height="{{ $height }}"
+        src="{{ $image.RelPermalink }}"
+        width="{{ $width }}"
+        layout="responsive"
+        ></amp-img>
+</amp-img>
+

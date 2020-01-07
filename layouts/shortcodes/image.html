@@ -1,8 +1,6 @@
-<amp-img
-    alt="{{ .Get "name" }}"
-    height="{{ if .Get "height" }}{{ .Get "height" }}{{ else }}1{{ end }}"
-    src="{{ .Site.BaseURL }}{{ .Get "image" }}"
-    width="{{ if .Get "width" }}{{ .Get "width" }}{{ else }}1{{ end }}"
-    layout="responsive"
-></amp-img>
+{{- $height := .Get "height" -}}
+{{- $image := .Get "image" -}}
+{{- $name := .Get "name" -}}
+{{- $width := .Get "width" -}}
 
+{{- dict "name" $name "image" $image "width" $width "height" $height | partial "image.html" -}}
