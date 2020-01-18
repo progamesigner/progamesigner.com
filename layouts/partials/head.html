@@ -1,5 +1,3 @@
-{{- $fonts := "https://fonts.googleapis.com/css?family=Noto+Sans+TC|Noto+Sans|Noto+Serif+TC|Noto+Serif&display=swap" -}}
-
 <!doctype html>
 <html amp lang="{{ .Language }}">
 <head>
@@ -11,7 +9,8 @@
 
     <link rel="preconnect dns-prefetch" href="https://fonts.gstatic.com/" crossorigin>
 
-    <link rel="preload" href="{{ $fonts }}" as="style" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif&display=swap" as="style" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Noto+Serif+TC&display=swap" as="style" crossorigin>
 
     {{ hugo.Generator }}
 
@@ -108,7 +107,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ "favicon-180.png" | absURL }}">
     <link rel="shortcut icon" href="{{ "favicon.png" | absURL }}">
 
-    <link rel="stylesheet" href="{{ $fonts }}" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif&display=swap" crossorigin>
+    {{- if eq (printf "%s" .Page.Language) "zh-tw" -}}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC|Noto+Serif+TC&display=swap" crossorigin>
+    {{- end -}}
 
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
