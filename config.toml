@@ -1,0 +1,31 @@
+baseURL = "https://progamesigner.com/"
+
+disableKinds = [
+  "404",
+  "robotsTXT",
+  "RSS",
+  "section",
+  "sitemap",
+  "taxonomy",
+  "taxonomyTerm"
+]
+
+googleAnalytics = "UA-109064425-1"
+
+[languages]
+[languages.en]
+  copyright = "Yang Sheng Han"
+  languageName = "English"
+  title = "Progamesigner - a developer"
+  heading = "Hello,"
+  subheading = "I'm progamesigner."
+  description = "The portfolio of Yang Sheng Han, a developer based in Taipei, Taiwan."
+  keywords = "Yang Sheng Han, progamesigner, developer"
+[languages.zh-tw]
+  copyright = "Yang Sheng Han"
+  languageName = "中文"
+  title = "Progamesigner - 開發者"
+  heading = "Hello,"
+  subheading = "I'm progamesigner."
+  description = "Yang Sheng Han的個人網站，在台北的開發者。"
+  keywords = "Yang Sheng Han, progamesigner, developer, 開發"
