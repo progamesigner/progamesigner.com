@@ -2,18 +2,8 @@ module.exports = {
   plugins: [
     require('@fullhuman/postcss-purgecss')({
       content: [
-        './hugo_stats.json'
+        './**/*.html'
       ],
-      defaultExtractor: content => {
-        const {
-          htmlElements: {
-            classes,
-            ids,
-            tags
-          }
-        } = JSON.parse(content)
-        return tags.concat(classes, ids)
-      },
       fontFace: true,
       keyframes: true
     }),
