@@ -13,14 +13,9 @@
     "url": "git+https://github.com/progamesigner/progamesigner.com.git"
   },
   "scripts": {
-    "build": "npx webpack-cli --mode development",
-    "build:prod": "npx webpack-cli --mode production",
-    "build:watch": "npx webpack-cli --mode development --watch",
-    "deploy": "npm run build && npm run hugo",
-    "deploy:prod": "npm run build:prod && npm run hugo:prod",
-    "hugo": "hugo --buildDrafts --buildFuture --environment development",
-    "hugo:prod": "hugo --environment production --enableGitInfo --minify",
-    "hugo:watch": "hugo serve --buildDrafts --buildFuture --environment development"
+    "deploy": "hugo --buildDrafts --buildFuture --environment development",
+    "deploy:prod": "hugo --environment production --enableGitInfo --minify",
+    "deploy:watch": "hugo serve --buildDrafts --buildFuture --environment development"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^2.1.0",
