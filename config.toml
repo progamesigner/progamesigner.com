@@ -12,6 +12,9 @@ disableKinds = [
 
 googleAnalytics = "UA-109064425-1"
 
+[build]
+  writeStats = true
+
 [languages]
 [languages.en]
   copyright = "Yang Sheng Han"

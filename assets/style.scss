@@ -23,27 +23,27 @@ $button-hover-border-color: transparent;
 $navbar-item-color: $link;
 $notification-radius: 0;
 
-@import '~bulma/sass/utilities/initial-variables';
-@import '~bulma/sass/utilities/functions';
-@import '~bulma/sass/utilities/derived-variables';
-@import '~bulma/sass/utilities/animations';
-@import '~bulma/sass/utilities/mixins';
-@import '~bulma/sass/utilities/controls';
+@import 'bulma/sass/utilities/initial-variables';
+@import 'bulma/sass/utilities/functions';
+@import 'bulma/sass/utilities/derived-variables';
+@import 'bulma/sass/utilities/animations';
+@import 'bulma/sass/utilities/mixins';
+@import 'bulma/sass/utilities/controls';
 
-@import '~bulma/sass/base/minireset';
-@import '~bulma/sass/base/generic';
+@import 'bulma/sass/base/minireset';
+@import 'bulma/sass/base/generic';
 
-@import '~bulma/sass/grid/columns';
+@import 'bulma/sass/grid/columns';
 
-@import '~bulma/sass/layout/footer';
+@import 'bulma/sass/layout/footer';
 
-@import '~bulma/sass/elements/button';
-@import '~bulma/sass/elements/container';
-@import '~bulma/sass/elements/icon';
-@import '~bulma/sass/elements/notification';
-@import '~bulma/sass/elements/title';
+@import 'bulma/sass/elements/button';
+@import 'bulma/sass/elements/container';
+@import 'bulma/sass/elements/icon';
+@import 'bulma/sass/elements/notification';
+@import 'bulma/sass/elements/title';
 
-@import '~bulma/sass/components/navbar';
+@import 'bulma/sass/components/navbar';
 
 a {
     font-weight: $weight-bold;

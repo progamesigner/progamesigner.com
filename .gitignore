@@ -1,4 +1,4 @@
-**/*.min.css
-**/*.min.js
+hugo_stats.json
 node_modules
 public
+resources
