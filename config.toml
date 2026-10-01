@@ -6,16 +6,19 @@ disableKinds = [
   "RSS",
   "section",
   "sitemap",
-  "taxonomy",
-  "taxonomyTerm"
+  "taxonomy"
 ]
 
-googleAnalytics = "UA-109064425-1"
+[security]
+  allowContent = ["text/html"]
+
+[services.googleAnalytics]
+  id = "UA-109064425-1"
 
 [languages]
 [languages.en]
   copyright = "Yang Sheng Han"
-  languageName = "English"
+  label = "English"
   title = "Progamesigner - a developer"
   heading = "Hi,"
   subheading = "I'm progamesigner."
@@ -23,7 +26,7 @@ googleAnalytics = "UA-109064425-1"
   keywords = "Yang Sheng Han, progamesigner, developer"
 [languages.zh-tw]
   copyright = "Yang Sheng Han"
-  languageName = "中文"
+  label = "中文"
   title = "Progamesigner - 開發者"
   heading = "Hi,"
   subheading = "I'm progamesigner."
