@@ -1,6 +1,6 @@
 # progamesigner.com 2026 改版與作品集計畫
 
-> 狀態：提案，尚未動工。本文件不改動網站內容或部署設定。
+> 狀態：方向已定（2026-10-13），進行視覺風格選擇，尚未動工。本文件不改動網站內容或部署設定。
 > 盤點日期：2026-10-13。版本號為當日 npm／repo 查證值，動工時再確認。
 
 ## 1. 現況盤點
@@ -84,7 +84,7 @@ Astro 7（2026-10-13 npm 為 7.3.8）靜態輸出，Tailwind CSS 4，作品用 c
 
 - 只放公開或已上線、能點進去看的作品。
 - 公司與客戶專案（SWAG、Oursky 等）不放。
-- 私有 repo 是否揭露由使用者逐一決定；候選名單不寫入本公開 repo。
+- 私有 repo 只在已有公開網址時放入（2026-10-13 決定）。
 - 與 GitHub profile README 的分類對齊，避免兩邊說法不一致。
 
 ### 精選（Featured，個案頁）
@@ -146,36 +146,77 @@ og: ./bragi/og.png        # 1200×630
 
 ### 需要使用者補的素材
 
-1. 個人照片：沿用 `assets/photo.png` 或提供新照片。
+1. ~~個人照片~~：不放照片（2026-10-13 決定），首頁以文字與作品為主。
 2. 自我介紹：中英各一段；GitHub profile README 的 `about` 可當底稿。
 3. Bragi 手機實機錄影或截圖（拍照、校對、朗讀三個畫面）。網頁工具的截圖可由 agent 用 Playwright 自動擷取。
 4. Muninn、Sleipnir、Homelab 個案的成果數據或想強調的重點（例如服務數量、agent 數、重建時間）。
 5. GPG 公鑰指紋與公鑰檔（只放公鑰）。
 6. 贊助管道的公開付款連結（不放帳號號碼）。
-7. self-hosted 工具的實際網址與是否對外開放。
-8. 要公開的私有專案名單（候選另存於內部筆記）。
+7. 若決定自架 self-hosted 工具，提供子網域規劃。
 
-## 4. 需要使用者決定的事
+## 4. 決策
+
+### 已決定（2026-10-13）
+
+| 決策 | 結論 |
+| --- | --- |
+| 技術方向 | B：Astro |
+| 語言 | 中英雙語，網址維持 `/`、`/zh-tw/` |
+| 私有專案 | 只放已有公開網址的作品 |
+| 照片 | 不放個人照片 |
+| 分析 | 採用代管服務，不自建（見下） |
+
+### 分析方案
+
+| 方案 | 費用 | Cookie／同意框 | 自訂事件 | 備註 |
+| --- | --- | --- | --- | --- |
+| Umami Cloud Hobby | 免費：1 個網站、每月 100K events、資料保留 6 個月 | 不用 cookie，可拿掉同意框 | 有 | 可追蹤作品卡片的 Try／Source 外連點擊 |
+| Cloudflare Web Analytics | 免費 | 不用 cookie | 無 | 不必把 DNS 轉到 Cloudflare，貼 JS beacon 即可；附 Core Web Vitals |
+| Plausible | 付費 | 不用 cookie | 有 | 功能完整但個人站不划算 |
+| GA4 | 免費 | 需要同意框 | 有 | 與移除同意框的目標衝突 |
+
+採用 **Umami Cloud Hobby**：作品集最想知道的是哪些專案被點開，需要外連事件；流量遠低於 100K events。6 個月保留期對個人站足夠；若不夠，可改 Cloudflare Web Analytics 或升級。
+
+### 待決
 
 | 決策 | 選項 | 建議 |
 | --- | --- | --- |
-| 技術方向 | A Hugo 翻新／B Astro／C Astro 並合併部落格 | B |
-| 語言 | 維持中英雙語／只留英文 | 維持雙語，網址不變（`/`、`/zh-tw/`） |
-| 分析 | 移除／GA4／Plausible／自架 Umami | 自架 Umami（無 cookie，可拿掉同意框）；不想維運就移除 |
-| 贊助 | 不做／GitHub Sponsors 等國際平台／台灣支付（Richart、LINE Bank、街口、綠界、歐付寶） | 先放 GitHub Sponsors 或 Buy Me a Coffee 一種，台灣支付等筆記「贊助付款連結」定案後再加 |
-| self-hosted 工具 | 只列已上線的／全部列出並標狀態 | 只列已上線且對外開放的 |
-| 私有專案 | 逐一決定是否公開 | 只放已有公開網址的 |
-| 視覺方向 | 參考筆記中的站點挑 1–2 個 | 偏 sindresorhus.com 的作品清單式，加 Brittany Chiang 式的精選區 |
+| 視覺風格 | Terminal／Swiss Index／Bento／Split Column／Start Page（設計稿見下） | 使用者選定後再細化 |
+| 贊助 | 不做／GitHub Sponsors 等國際平台／台灣支付 | 先放一種國際平台，台灣支付等「贊助付款連結」筆記定案 |
+| self-hosted 工具 | 見下 | 待使用者決定是否自架 |
+
+### Self-hosted 工具說明
+
+筆記列的五個都是開源專案，目前都**沒有**部署：
+
+| 工具 | 用途 | 部署需求 |
+| --- | --- | --- |
+| CyberChef（GCHQ） | 瀏覽器內的資料轉換工具：Base64、hex、編碼、雜湊、加解密、壓縮等，可串成流程 | 純靜態網頁，資料不離開瀏覽器 |
+| hat.sh | 瀏覽器內的檔案加解密（libsodium），可用密碼或公鑰 | 純靜態網頁 |
+| PrivateBin | 零知識加密 pastebin：伺服器只存密文，可設定閱後即焚與期限 | PHP 伺服器與儲存空間；與自製的 Secret Send 用途重疊 |
+| wifi-card（bndw） | 列印 Wi-Fi QR 卡 | 已有自製的 Wi-Fi Card（wificard.0x148.com），不需要再架 |
+| YOURLS | 自架短網址服務，有點擊統計 | PHP + MySQL |
+
+### 設計稿
+
+五種風格放在同一張 Artifact 畫布（私人連結，見內部筆記），內容皆為實際作品資料：
+
+1. **Terminal**：延續 GitHub profile README 的 `$ whoami` 風格，深色、等寬字。
+2. **Swiss Index**：白底黑字、超大標題、編號作品索引表，接近 sindresorhus.com。
+3. **Bento**：大小不一的圓角卡片拼貼，精選作品附截圖位。
+4. **Split Column**：左欄姓名與導覽、右欄捲動內容，接近 Brittany Chiang 的配置。
+5. **Start Page**：起始頁／啟動器，搜尋框可即時篩選工具圖示，接近 Bonjourr。
 
 ## 5. Milestone 與任務
 
 ### M0 決策與素材
 
-- [ ] 使用者回覆第 4 節的決策。
+- [x] 技術方向、語言、私有專案、照片、分析方案。
+- [ ] 選定視覺風格（或混搭），確認後產出中文版與手機版設計稿。
+- [ ] 決定贊助與 self-hosted 工具。
 - [ ] 收齊第 3 節的素材，缺的標記為「上線後補」。
-- [ ] 確認 self-hosted 工具清單與網址。
 
-完成條件：方向、語言、分析、贊助有結論；精選 4 個專案的素材齊全或有替代方案。
+完成條件：視覺風格、贊助、self-hosted 工具有結論；精選 4 個專案的素材齊全或有替代方案。
 
 ### M1 新站骨架（新 branch，不動正式站）
 
@@ -217,7 +258,7 @@ og: ./bragi/og.png        # 1200×630
 
 ### M5 上線
 
-- [ ] 分析依 M0 決定接上，移除 AMP 與 cookie 同意框。
+- [ ] 接上 Umami Cloud（含外連點擊事件），移除 AMP、GA UA 與 cookie 同意框。
 - [ ] 比對舊站網址，必要時在 `netlify.toml` 加 redirect。
 - [ ] 更新 README。
 - [ ] 使用者確認 deploy preview 後，由使用者合併並切換 production。
