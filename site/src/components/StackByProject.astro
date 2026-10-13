@@ -1,0 +1,47 @@
+---
+import { localeFromUrl, localizePath, translator } from '../i18n/ui';
+import { getProjects, primaryLink } from '../lib/projects';
+
+// Skills are derived from project data rather than listed by hand,
+// so every technology shown here points at work that uses it.
+const locale = localeFromUrl(Astro.url);
+const t = translator(locale);
+const projects = await getProjects();
+
+const byTech = new Map<string, { name: string; href: string }[]>();
+for (const project of projects) {
+  const href = primaryLink(project);
+  for (const tech of project.data.stack) {
+    const list = byTech.get(tech) ?? [];
+    list.push({ name: project.data.name, href: href.startsWith('/') ? localizePath(href, locale) : href });
+    byTech.set(tech, list);
+  }
+}
+const rows = [...byTech.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+---
+
+<section id="stack" aria-labelledby="stack-title" class="reveal flex scroll-mt-8 flex-col">
+  <div class="flex flex-wrap items-baseline justify-between gap-2 border-b-2 border-ink pb-3">
+    <h2 id="stack-title" class="text-[13px] font-extrabold tracking-[0.06em] uppercase">{t('stack.title')}</h2>
+    <span class="meta">{t('stack.lead')}</span>
+  </div>
+  <dl class="grid grid-cols-[repeat(auto-fill,minmax(18rem,1fr))] gap-x-10">
+    {
+      rows.map(([tech, list]) => (
+        <div class="flex items-baseline justify-between gap-4 border-b border-rule py-3">
+          <dt class="font-semibold">{tech}</dt>
+          <dd class="text-right text-sm text-muted">
+            {list.map((item, index) => (
+              <>
+                <a class="link" href={item.href}>
+                  {item.name}
+                </a>
+                {index < list.length - 1 && ', '}
+              </>
+            ))}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>

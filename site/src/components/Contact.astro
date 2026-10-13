@@ -1,37 +1,35 @@
 ---
-import { localeFromUrl, translator } from '../i18n/ui';
+import { localeFromUrl, localizePath, translator } from '../i18n/ui';
+import { email, pgp, profiles } from '../site.config';
 
-const t = translator(localeFromUrl(Astro.url));
-const fingerprint = '11BE C92C 7365 6BE7 C4D1  EC61 546B 7387 8102 7B88';
-const profiles = [
-  { label: 'GitHub', href: 'https://github.com/progamesigner' },
-  { label: 'X', href: 'https://x.com/progamesigner' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/progamesigner' },
-  { label: `${t('nav.blog')} — 0x148.com`, href: 'https://0x148.com' },
-];
+const locale = localeFromUrl(Astro.url);
+const t = translator(locale);
 ---
 
 <section id="contact" class="reveal grid scroll-mt-8 grid-cols-[repeat(auto-fit,minmax(17.5rem,1fr))] gap-10 border-t-2 border-ink pt-6">
   <h2 class="display text-7xl">{t('contact.title')}</h2>
   <div class="flex flex-col gap-3">
     <p class="text-muted">{t('contact.lead')}</p>
-    <a href="mailto:progamesigner@outlook.com" class="link text-[22px] font-semibold break-all">progamesigner@outlook.com</a>
+    <a href={`mailto:${email}`} class="link text-[22px] font-semibold break-all">{email}</a>
     <div class="flex flex-col gap-1 border border-rule bg-surface px-4 py-3.5">
-      <span class="meta uppercase">OpenPGP · RSA 4096</span>
-      <code class="font-mono text-[13px] [overflow-wrap:anywhere] [word-break:normal]">{fingerprint}</code>
-      <span class="meta">{t('contact.keyNote')}</span>
-      <a href="/pgp.asc" class="link text-[13px]" download>{t('contact.download')}</a>
+      <span class="meta uppercase">OpenPGP · {pgp.algorithm}</span>
+      <code class="font-mono text-[13px] [overflow-wrap:anywhere] [word-break:normal]">{pgp.fingerprint}</code>
+      <span class="meta">{t('contact.keyNote', { uid: pgp.userId })}</span>
+      <a href={pgp.file} class="link text-[13px]" download>{t('contact.download')}</a>
     </div>
   </div>
-  <ul class="flex flex-col gap-2.5 text-[15px]">
-    {
-      profiles.map((profile) => (
-        <li>
-          <a class="link" href={profile.href} rel="me">
-            {profile.label}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+  <div class="flex flex-col justify-between gap-6">
+    <ul class="flex flex-col gap-2.5 text-[15px]">
+      {
+        profiles.map((profile) => (
+          <li>
+            <a class="link" href={profile.href} rel="me">
+              {profile.label === 'Blog' ? `${t('nav.blog')} — ${profile.handle}` : profile.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href={localizePath('/contact/', locale)} class="link w-fit font-semibold">{t('contact.more')} →</a>
+  </div>
 </section>

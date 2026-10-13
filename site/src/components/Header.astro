@@ -4,6 +4,12 @@ import { localeFromUrl, localizePath, switchLocalePath, translator } from '../i1
 const locale = localeFromUrl(Astro.url);
 const t = translator(locale);
 const home = localizePath('/', locale);
+const contact = localizePath('/contact/', locale);
+const links = [
+  { label: t('nav.work'), href: localizePath('/#index', locale), current: false },
+  { label: t('nav.about'), href: localizePath('/#about', locale), current: false },
+  { label: t('nav.contact'), href: contact, current: Astro.url.pathname === contact },
+];
 const languages = [
   { code: 'en', label: 'EN', href: switchLocalePath(Astro.url, 'en') },
   { code: 'zh-tw', label: '中文', href: switchLocalePath(Astro.url, 'zh-tw') },
@@ -15,9 +21,13 @@ const languages = [
     <span aria-hidden="true" class="inline-block size-3 bg-accent" transition:name="brand-mark"></span>progamesigner
   </a>
   <nav aria-label={t('nav.primary')} class="flex flex-wrap items-center gap-x-6 gap-y-2">
-    <a href={`${home}#index`}>{t('nav.work')}</a>
-    <a href={`${home}#about`}>{t('nav.about')}</a>
-    <a href={`${home}#contact`}>{t('nav.contact')}</a>
+    {
+      links.map((link) => (
+        <a href={link.href} aria-current={link.current ? 'page' : undefined} class="aria-[current=page]:underline aria-[current=page]:underline-offset-4">
+          {link.label}
+        </a>
+      ))
+    }
     <a href="https://0x148.com">{t('nav.blog')} ↗</a>
     <div role="group" aria-label={t('nav.language')} class="flex border border-rule">
       {

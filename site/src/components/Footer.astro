@@ -1,12 +1,18 @@
 ---
-import { localeFromUrl, translator } from '../i18n/ui';
+import { localeFromUrl, localizePath, translator } from '../i18n/ui';
+import { analyticsId } from '../site.config';
 
-const t = translator(localeFromUrl(Astro.url));
+const locale = localeFromUrl(Astro.url);
+const t = translator(locale);
 const year = new Date().getFullYear();
-const analytics = Boolean(import.meta.env.PUBLIC_GA_ID);
+const analytics = import.meta.env.PROD && analyticsId !== undefined;
 ---
 
 <footer class="mx-auto mt-28 flex max-w-7xl flex-wrap justify-between gap-3 border-t border-rule px-4 pt-6 pb-10 meta sm:px-8">
   <span>© {year} Yang Sheng Han</span>
-  <span>{t('footer.built')}{analytics && ` · ${t('footer.analytics')}`}</span>
+  <span class="flex flex-wrap gap-x-4 gap-y-1">
+    <a class="link" href={localizePath('/contact/', locale)}>{t('nav.contact')}</a>
+    <a class="link" href="/pgp.asc">PGP</a>
+    <span>{t('footer.built')}{analytics && ` · ${t('footer.analytics')}`}</span>
+  </span>
 </footer>

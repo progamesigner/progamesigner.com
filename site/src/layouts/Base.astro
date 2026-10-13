@@ -3,7 +3,7 @@ import { ClientRouter } from 'astro:transitions';
 import Analytics from '../components/Analytics.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { htmlLang, type Locale, localeFromUrl, ogLocale, switchLocalePath, translator } from '../i18n/ui';
+import { htmlLang, isNotFound, type Locale, localeFromUrl, ogLocale, switchLocalePath, translator } from '../i18n/ui';
 import '../styles/global.css';
 
 interface Props {
@@ -18,6 +18,7 @@ const { title, description = t('site.description'), noindex = false } = Astro.pr
 const pageTitle = title ? `${title} — progamesigner` : t('site.title');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
+const indexable = !isNotFound(Astro.url);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -58,10 +59,16 @@ const jsonLd = {
     <meta name="description" content={description} />
     <meta name="author" content="Yang Sheng Han" />
     {noindex && <meta name="robots" content="noindex" />}
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="en" href={new URL(switchLocalePath(Astro.url, 'en'), Astro.site)} />
-    <link rel="alternate" hreflang="zh-Hant-TW" href={new URL(switchLocalePath(Astro.url, 'zh-tw'), Astro.site)} />
-    <link rel="alternate" hreflang="x-default" href={new URL(switchLocalePath(Astro.url, 'en'), Astro.site)} />
+    {
+      indexable && (
+        <>
+          <link rel="canonical" href={canonical} />
+          <link rel="alternate" hreflang="en" href={new URL(switchLocalePath(Astro.url, 'en'), Astro.site)} />
+          <link rel="alternate" hreflang="zh-Hant-TW" href={new URL(switchLocalePath(Astro.url, 'zh-tw'), Astro.site)} />
+          <link rel="alternate" hreflang="x-default" href={new URL(switchLocalePath(Astro.url, 'en'), Astro.site)} />
+        </>
+      )
+    }
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />

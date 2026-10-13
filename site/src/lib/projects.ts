@@ -15,7 +15,7 @@ export async function getCaseStudies(locale: Locale): Promise<CaseStudy[]> {
 }
 
 export function caseStudyPath(project: Project): string {
-  return `/work/${project.id}`;
+  return `/work/${project.id}/`;
 }
 
 export function primaryLink(project: Project): string {

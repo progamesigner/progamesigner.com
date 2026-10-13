@@ -36,8 +36,8 @@ const shots = screens[project.id] ?? [];
 <Base title={project.data.name} description={study.data.summary} noindex={study.data.draft}>
   <article class="mx-auto flex max-w-7xl flex-col gap-20 px-4 pt-6 sm:px-8">
     <header class="flex flex-col gap-8 border-t border-ink pt-4">
-      <nav aria-label="Breadcrumb" class="flex justify-between meta">
-        <span><a class="link" href={`${localizePath('/', locale)}#index`}>Index</a> / {no(index + 1)}</span>
+      <nav aria-label={t('case.breadcrumb')} class="flex justify-between meta">
+        <span><a class="link" href={localizePath('/#index', locale)}>{t('case.index')}</a> / {no(index + 1)}</span>
         <span>{t('case.label')} {no(index + 1)} / {no(total)}</span>
       </nav>
       <h1 class="display text-[clamp(4.5rem,15vw,12.5rem)] tracking-[-0.025em]" transition:name={`project-${project.id}`}>

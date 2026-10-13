@@ -1,6 +1,6 @@
 # progamesigner.com 2026 改版與作品集計畫
 
-> 狀態：規劃定案（2026-10-13）。視覺方向為 Swiss v2，設計稿待使用者審閱；審閱完成即可進入 M1。本文件不改動網站內容或部署設定。
+> 狀態：M1 骨架完成、M2 首頁／聯絡／SEO 實作中（2026-10-13）。Swiss v2 設計稿已確認。新站在 `site/`，正式站與 Netlify 設定未變動。
 > 盤點日期：2026-10-13。版本號為當日 npm／repo 查證值，動工時再確認。
 
 ## 1. 現況盤點
@@ -188,7 +188,8 @@ og: ./bragi/og.png        # 1200×630
 
 | 項目 | 狀態 |
 | --- | --- |
-| Swiss v2 設計稿 | 使用者尚未審閱；可直接在畫布留言或指出要改的地方 |
+| GA4 Measurement ID | 使用者尚未提供；`site/src/site.config.ts` 留空時不載入 GA |
+| Netlify deploy preview | 是否為此 branch 開啟，由使用者決定 |
 
 ### 設計稿
 
@@ -242,7 +243,7 @@ accent 備選：鼠尾草綠 `#5E7F6B`、灰藍 `#4F6D8F`、赭黃 `#B8862E`，�
 - [x] 贊助與 self-hosted 工具：都不做。
 - [x] 上線工具截圖、GPG 指紋。
 - [x] 分析方案（GA4）、聯絡信箱與 GPG。
-- [ ] 使用者審閱 Swiss v2 設計稿。
+- [x] 使用者審閱 Swiss v2 設計稿（2026-10-13 確認）。
 - [ ] 使用者建立 GA4 property，提供 Measurement ID。
 - [ ] 收齊第 3 節的素材，缺的標記為「上線後補」。
 
@@ -269,10 +270,14 @@ accent 備選：鼠尾草綠 `#5E7F6B`、灰藍 `#4F6D8F`、赭黃 `#B8862E`，�
 
 ### M2 首頁、關於與聯絡
 
-- [ ] 首頁：自我介紹、近況（Now）、精選作品、聯絡入口。
-- [ ] 技能改為依作品歸納，不再列長清單。
-- [ ] 聯絡頁：Email、GPG 指紋（標示 uid 為 gmail）與公鑰下載（只匯出有效金鑰）、GitHub、X、LinkedIn、部落格。
-- [ ] JSON-LD 改 `Person` + `WebSite`；加 sitemap、robots.txt、404。
+- [x] 首頁：自我介紹、近況（Now）、作品索引（含精選）、聯絡入口。
+- [x] 技能改為依作品歸納：「技術，依作品」區塊由專案資料的 `stack` 自動產生，每項技術都連到用到它的作品。
+- [x] 獨立聯絡頁 `/contact/`、`/zh-tw/contact/`：Email、GPG 指紋／演算法／建立日期／uid（標示 gmail）、匯入指令、公鑰下載與 keyserver 連結、GitHub、X、LinkedIn、部落格。首頁聯絡區保留精簡版並連到聯絡頁。
+- [x] JSON-LD `Person` + `WebSite`；sitemap（排除草稿）、robots.txt、雙語 404。
+- [x] 雙語路由：所有內部連結統一帶結尾斜線（`trailingSlash: 'always'`），語言切換停在同一頁；中英字串以型別檢查保證鍵值一致。
+- [x] GA4 設定集中在 `site/src/site.config.ts`，ID 留空（placeholder），沒有合法 `G-` ID 時不載入、頁尾也不顯示 GA 說明。
+- [x] 內部連結檢查 `npm run check:links`（含頁內錨點），已加入 CI。
+- [ ] Lighthouse 四項 ≥ 95：待 deploy preview 或 CI 加入 Lighthouse 後量測。
 
 完成條件：中英兩版內容一致；Lighthouse 四項 ≥ 95。
 

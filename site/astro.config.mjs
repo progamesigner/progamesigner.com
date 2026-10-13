@@ -18,7 +18,8 @@ const draftPages = readdirSync(caseStudyDir)
 
 export default defineConfig({
   site: 'https://progamesigner.com',
-  trailingSlash: 'ignore',
+  trailingSlash: 'always',
+  build: { format: 'directory' },
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'zh-tw'],
