@@ -1,6 +1,6 @@
 # progamesigner.com 2026 改版與作品集計畫
 
-> 狀態：方向與視覺風格已定（2026-10-13，Swiss v2），等待設計稿確認後動工。本文件不改動網站內容或部署設定。
+> 狀態：規劃定案（2026-10-13）。視覺方向為 Swiss v2，設計稿待使用者審閱；審閱完成即可進入 M1。本文件不改動網站內容或部署設定。
 > 盤點日期：2026-10-13。版本號為當日 npm／repo 查證值，動工時再確認。
 
 ## 1. 現況盤點
@@ -150,7 +150,7 @@ og: ./bragi/og.png        # 1200×630
 2. 自我介紹：中英各一段；GitHub profile README 的 `about` 可當底稿。
 3. Bragi 登入後的校對與朗讀畫面（需要使用者登入後擷取）。其餘上線工具的桌機／手機、淺色／深色截圖已於 2026-10-13 用 Playwright 擷取。
 4. Muninn、Sleipnir、Homelab 個案的成果數據或想強調的重點（例如服務數量、agent 數、重建時間）。
-5. ~~GPG~~：已從 GitHub 取得。唯一有效的金鑰為 RSA 4096，指紋 `11BE C92C 7365 6BE7 C4D1  EC61 546B 7387 8102 7B88`，uid 是 progamesigner@gmail.com，與網站聯絡信箱 progamesigner@outlook.com 不同，需使用者決定（見第 4 節）。網站只放這把金鑰，不連到含過期工作金鑰的 `github.com/progamesigner.gpg`。
+5. ~~GPG~~：已從 GitHub 取得。唯一有效的金鑰為 RSA 4096，指紋 `11BE C92C 7365 6BE7 C4D1  EC61 546B 7387 8102 7B88`，uid 是 progamesigner@gmail.com。網站信箱維持 outlook，金鑰照實標示 gmail uid（見第 4 節）。網站只放這把金鑰，不連到含過期工作金鑰的 `github.com/progamesigner.gpg`。
 
 ## 4. 決策
 
@@ -162,7 +162,8 @@ og: ./bragi/og.png        # 1200×630
 | 語言 | 中英雙語，網址維持 `/`、`/zh-tw/` |
 | 私有專案 | 只放已有公開網址的作品 |
 | 照片 | 不放個人照片 |
-| 分析 | 採用代管服務，不自建（見下） |
+| 分析 | GA4 標準版（見下） |
+| 聯絡信箱與 GPG | 網站信箱維持 progamesigner@outlook.com；公開金鑰維持 gmail uid 那把，網站照實標示。之後是否在金鑰加 outlook uid 由使用者自行處理，不影響上線 |
 | 贊助 | 不做 |
 | self-hosted 工具 | 不做；外部筆記「個人網站設計更新」已於 2026-10-13 標為完成 |
 | 視覺風格 | Swiss Index 深化版（Swiss v2）：柔和配色、深淺色模式（見第 4 節設計稿） |
@@ -176,15 +177,18 @@ og: ./bragi/og.png        # 1200×630
 | Plausible | 付費 | 不用 cookie | 有 | 功能完整但個人站不划算 |
 | GA4 | 標準版免費（360 才收費）；資料保留最多 14 個月 | 寫入 `_ga` cookie；歐盟等地訪客需同意框，台灣法規未強制 | 有 | 可串 Search Console；script 較重，較常被擋 |
 
-初版建議 **Umami Cloud Hobby**：作品集最想知道的是哪些專案被點開，需要外連事件；流量遠低於 100K events。6 個月保留期對個人站足夠；若不夠，可改 Cloudflare Web Analytics 或升級。
+採用 **GA4 標準版**（2026-10-13 使用者決定）。實作方式：
+
+- 使用者在 GA 建立新的 GA4 property，取得 `G-` 開頭的 Measurement ID（公開值，可放進設定檔）；舊的 `UA-109064425-1` 一併移除。
+- 開啟 Enhanced Measurement，外連點擊（作品的 Try／Source）會自動記錄，不必自訂事件。
+- 用 `@astrojs/partytown` 把 gtag 移到 Web Worker，避免拖慢主執行緒；只在 production build 載入。
+- 同意框：台灣法規未強制，預設不放；頁尾註明使用 GA。若日後要支援歐盟訪客，再加 Consent Mode v2。
 
 ### 待決
 
-| 決策 | 選項 | 建議 |
-| --- | --- | --- |
-| 分析 | Umami Cloud Hobby／GA4 | 見上方比較；GA4 標準版免費，代價是 cookie 與同意框 |
-| 聯絡信箱與 GPG | 聯絡信箱改 gmail／在金鑰加 outlook uid／維持現狀 | 在金鑰加 outlook uid，聯絡信箱不變 |
-| Swiss v2 設計稿 | 確認或提出修改 | — |
+| 項目 | 狀態 |
+| --- | --- |
+| Swiss v2 設計稿 | 使用者尚未審閱；可直接在畫布留言或指出要改的地方 |
 
 ### 設計稿
 
@@ -237,10 +241,12 @@ accent 備選：鼠尾草綠 `#5E7F6B`、灰藍 `#4F6D8F`、赭黃 `#B8862E`，�
 - [x] 選定視覺風格：Swiss v2；已產出淺色、深色、個案頁與中文手機版設計稿。
 - [x] 贊助與 self-hosted 工具：都不做。
 - [x] 上線工具截圖、GPG 指紋。
-- [ ] 確認 Swiss v2 設計稿、分析方案、聯絡信箱與 GPG uid。
+- [x] 分析方案（GA4）、聯絡信箱與 GPG。
+- [ ] 使用者審閱 Swiss v2 設計稿。
+- [ ] 使用者建立 GA4 property，提供 Measurement ID。
 - [ ] 收齊第 3 節的素材，缺的標記為「上線後補」。
 
-完成條件：設計稿與分析方案確認；精選 4 個專案的素材齊全或有替代方案。
+完成條件：設計稿確認、取得 GA4 Measurement ID；精選 4 個專案的素材齊全或有替代方案。
 
 ### M1 新站骨架（新 branch，不動正式站）
 
@@ -256,7 +262,7 @@ accent 備選：鼠尾草綠 `#5E7F6B`、灰藍 `#4F6D8F`、赭黃 `#B8862E`，�
 
 - [ ] 首頁：自我介紹、近況（Now）、精選作品、聯絡入口。
 - [ ] 技能改為依作品歸納，不再列長清單。
-- [ ] 聯絡頁：Email、GPG 指紋與公鑰下載、GitHub、X、LinkedIn、部落格。
+- [ ] 聯絡頁：Email、GPG 指紋（標示 uid 為 gmail）與公鑰下載（只匯出有效金鑰）、GitHub、X、LinkedIn、部落格。
 - [ ] JSON-LD 改 `Person` + `WebSite`；加 sitemap、robots.txt、404。
 
 完成條件：中英兩版內容一致；Lighthouse 四項 ≥ 95。
@@ -284,7 +290,7 @@ accent 備選：鼠尾草綠 `#5E7F6B`、灰藍 `#4F6D8F`、赭黃 `#B8862E`，�
 
 ### M5 上線
 
-- [ ] 依 M0 結論接上分析（含外連點擊事件），移除 AMP 與 GA UA；若採 Umami 一併移除 cookie 同意框。
+- [ ] 以 Partytown 接上 GA4（Enhanced Measurement 記錄外連點擊），移除 AMP、GA UA 與舊的 cookie 同意框。
 - [ ] 比對舊站網址，必要時在 `netlify.toml` 加 redirect。
 - [ ] 更新 README。
 - [ ] 使用者確認 deploy preview 後，由使用者合併並切換 production。
