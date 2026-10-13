@@ -1,6 +1,6 @@
 # progamesigner.com 2026 改版與作品集計畫
 
-> 狀態：方向已定（2026-10-13），進行視覺風格選擇，尚未動工。本文件不改動網站內容或部署設定。
+> 狀態：方向與視覺風格已定（2026-10-13，Swiss v2），等待設計稿確認後動工。本文件不改動網站內容或部署設定。
 > 盤點日期：2026-10-13。版本號為當日 npm／repo 查證值，動工時再確認。
 
 ## 1. 現況盤點
@@ -44,9 +44,9 @@
 | 目標 | 現況 | 落差 |
 | --- | --- | --- |
 | GPG 資訊；聯絡資訊獨立成頁 | 只有 mailto 按鈕 | 需要聯絡頁與公鑰／指紋 |
-| 贊助資訊或頁面 | 無 | 需決定平台與呈現方式 |
+| 贊助資訊或頁面 | 無 | 決定不做 |
 | 作品頁（含 VS Code 色彩主題） | 無；SpaceGuy 主題仍在構想階段 | 作品頁全新；主題作品等完成再放 |
-| 整合 self-hosted 服務連結（CyberChef、hat.sh、PrivateBin、wifi-card、YOURLS，持續增加） | 無 | 需要「工具」頁與資料來源 |
+| 整合 self-hosted 服務連結（CyberChef、hat.sh、PrivateBin、wifi-card、YOURLS，持續增加） | 無 | 決定不做 |
 | 技術：Astro／React／Framer Motion／Tailwind | Hugo／Bulma／AMP | 整站重寫 |
 
 「2026 更新個人網站與作品集」筆記的目標段落尚空白，參考站為 Bonjourr、Web-Browser-Homepage、sindresorhus.com，方向偏向「工具入口＋作品清單」，而不只是履歷頁。
@@ -148,11 +148,9 @@ og: ./bragi/og.png        # 1200×630
 
 1. ~~個人照片~~：不放照片（2026-10-13 決定），首頁以文字與作品為主。
 2. 自我介紹：中英各一段；GitHub profile README 的 `about` 可當底稿。
-3. Bragi 手機實機錄影或截圖（拍照、校對、朗讀三個畫面）。網頁工具的截圖可由 agent 用 Playwright 自動擷取。
+3. Bragi 登入後的校對與朗讀畫面（需要使用者登入後擷取）。其餘上線工具的桌機／手機、淺色／深色截圖已於 2026-10-13 用 Playwright 擷取。
 4. Muninn、Sleipnir、Homelab 個案的成果數據或想強調的重點（例如服務數量、agent 數、重建時間）。
-5. GPG 公鑰指紋與公鑰檔（只放公鑰）。
-6. 贊助管道的公開付款連結（不放帳號號碼）。
-7. 若決定自架 self-hosted 工具，提供子網域規劃。
+5. ~~GPG~~：已從 GitHub 取得。唯一有效的金鑰為 RSA 4096，指紋 `11BE C92C 7365 6BE7 C4D1  EC61 546B 7387 8102 7B88`，uid 是 progamesigner@gmail.com，與網站聯絡信箱 progamesigner@outlook.com 不同，需使用者決定（見第 4 節）。網站只放這把金鑰，不連到含過期工作金鑰的 `github.com/progamesigner.gpg`。
 
 ## 4. 決策
 
@@ -165,6 +163,9 @@ og: ./bragi/og.png        # 1200×630
 | 私有專案 | 只放已有公開網址的作品 |
 | 照片 | 不放個人照片 |
 | 分析 | 採用代管服務，不自建（見下） |
+| 贊助 | 不做 |
+| self-hosted 工具 | 不做；外部筆記「個人網站設計更新」已於 2026-10-13 標為完成 |
+| 視覺風格 | Swiss Index 深化版（Swiss v2）：柔和配色、深淺色模式（見第 4 節設計稿） |
 
 ### 分析方案
 
@@ -173,33 +174,21 @@ og: ./bragi/og.png        # 1200×630
 | Umami Cloud Hobby | 免費：1 個網站、每月 100K events、資料保留 6 個月 | 不用 cookie，可拿掉同意框 | 有 | 可追蹤作品卡片的 Try／Source 外連點擊 |
 | Cloudflare Web Analytics | 免費 | 不用 cookie | 無 | 不必把 DNS 轉到 Cloudflare，貼 JS beacon 即可；附 Core Web Vitals |
 | Plausible | 付費 | 不用 cookie | 有 | 功能完整但個人站不划算 |
-| GA4 | 免費 | 需要同意框 | 有 | 與移除同意框的目標衝突 |
+| GA4 | 標準版免費（360 才收費）；資料保留最多 14 個月 | 寫入 `_ga` cookie；歐盟等地訪客需同意框，台灣法規未強制 | 有 | 可串 Search Console；script 較重，較常被擋 |
 
-採用 **Umami Cloud Hobby**：作品集最想知道的是哪些專案被點開，需要外連事件；流量遠低於 100K events。6 個月保留期對個人站足夠；若不夠，可改 Cloudflare Web Analytics 或升級。
+初版建議 **Umami Cloud Hobby**：作品集最想知道的是哪些專案被點開，需要外連事件；流量遠低於 100K events。6 個月保留期對個人站足夠；若不夠，可改 Cloudflare Web Analytics 或升級。
 
 ### 待決
 
 | 決策 | 選項 | 建議 |
 | --- | --- | --- |
-| 視覺風格 | Terminal／Swiss Index／Bento／Split Column／Start Page（設計稿見下） | 使用者選定後再細化 |
-| 贊助 | 不做／GitHub Sponsors 等國際平台／台灣支付 | 先放一種國際平台，台灣支付等「贊助付款連結」筆記定案 |
-| self-hosted 工具 | 見下 | 待使用者決定是否自架 |
-
-### Self-hosted 工具說明
-
-筆記列的五個都是開源專案，目前都**沒有**部署：
-
-| 工具 | 用途 | 部署需求 |
-| --- | --- | --- |
-| CyberChef（GCHQ） | 瀏覽器內的資料轉換工具：Base64、hex、編碼、雜湊、加解密、壓縮等，可串成流程 | 純靜態網頁，資料不離開瀏覽器 |
-| hat.sh | 瀏覽器內的檔案加解密（libsodium），可用密碼或公鑰 | 純靜態網頁 |
-| PrivateBin | 零知識加密 pastebin：伺服器只存密文，可設定閱後即焚與期限 | PHP 伺服器與儲存空間；與自製的 Secret Send 用途重疊 |
-| wifi-card（bndw） | 列印 Wi-Fi QR 卡 | 已有自製的 Wi-Fi Card（wificard.0x148.com），不需要再架 |
-| YOURLS | 自架短網址服務，有點擊統計 | PHP + MySQL |
+| 分析 | Umami Cloud Hobby／GA4 | 見上方比較；GA4 標準版免費，代價是 cookie 與同意框 |
+| 聯絡信箱與 GPG | 聯絡信箱改 gmail／在金鑰加 outlook uid／維持現狀 | 在金鑰加 outlook uid，聯絡信箱不變 |
+| Swiss v2 設計稿 | 確認或提出修改 | — |
 
 ### 設計稿
 
-五種風格放在同一張 Artifact 畫布（私人連結，見內部筆記），內容皆為實際作品資料：
+第一輪五種風格放在同一張 Artifact 畫布（私人連結，見內部筆記），內容皆為實際作品資料：
 
 1. **Terminal**：延續 GitHub profile README 的 `$ whoami` 風格，深色、等寬字。
 2. **Swiss Index**：白底黑字、超大標題、編號作品索引表，接近 sindresorhus.com。
@@ -207,16 +196,51 @@ og: ./bragi/og.png        # 1200×630
 4. **Split Column**：左欄姓名與導覽、右欄捲動內容，接近 Brittany Chiang 的配置。
 5. **Start Page**：起始頁／啟動器，搜尋框可即時篩選工具圖示，接近 Bonjourr。
 
+選定 Swiss Index 後的第二輪（Swiss v2），同一張畫布第二列：首頁淺色、首頁深色、Bragi 個案頁、手機版（中文、深色）。
+
+#### Swiss v2 設計規格
+
+色彩：
+
+| Token | 淺色 | 深色 |
+| --- | --- | --- |
+| `bg` | `#F3F1EC` 暖紙白 | `#161615` |
+| `surface` | `#FBFAF7` | `#1F1E1C` |
+| `ink` | `#22211F` | `#ECE8E1` |
+| `muted` | `#5F5B54` | `#A39E95` |
+| `rule` | `#D9D5CC` | `#34322F` |
+| `accent` | `#D4563A` 柔和朱紅（只用在大字與標記） | `#F08A6E` |
+| `live` | `#3F8F5A` | `#6CCB8A` |
+
+accent 備選：鼠尾草綠 `#5E7F6B`、灰藍 `#4F6D8F`、赭黃 `#B8862E`，各有對應的深色版本。
+
+字型：Archivo（可變字型，寬度 62–125、粗細 300–900）做標題與內文；Noto Sans TC 處理中文；IBM Plex Mono 做編號與後設資訊。
+
+#### 現代技術與互動
+
+| 項目 | 做法 |
+| --- | --- |
+| 深淺色 | CSS `color-scheme` + `light-dark()`，預設跟隨系統，切換鈕寫入 `localStorage`；token 以 OKLCH 定義 |
+| 頁面轉場 | Astro `<ClientRouter />`（View Transitions API）：索引列的專案名稱轉場成個案頁大標 |
+| 可變字型 | 索引列 hover／focus 時 `font-stretch` 由 80% 展開到 112% |
+| 索引預覽 | 桌機版 hover 或鍵盤 focus 某列時，右側預覽切換成該作品截圖；沒有 UI 的作品顯示字體卡 |
+| 捲動動畫 | CSS scroll-driven animations 做區塊淡入與技術跑馬燈；`prefers-reduced-motion` 時全部關閉 |
+| 指令選單 | ⌘K 開啟，搜尋作品、頁面與語言切換；React island + Motion，靜態資料由 build 產生 |
+| 版面 | Container queries 讓索引列在窄欄自動換行；全站零 JS 也能閱讀 |
+| 狀態 | 「近況」與「上線中」標記由作品資料的 `status` 欄位產生 |
+
 ## 5. Milestone 與任務
 
 ### M0 決策與素材
 
 - [x] 技術方向、語言、私有專案、照片、分析方案。
-- [ ] 選定視覺風格（或混搭），確認後產出中文版與手機版設計稿。
-- [ ] 決定贊助與 self-hosted 工具。
+- [x] 選定視覺風格：Swiss v2；已產出淺色、深色、個案頁與中文手機版設計稿。
+- [x] 贊助與 self-hosted 工具：都不做。
+- [x] 上線工具截圖、GPG 指紋。
+- [ ] 確認 Swiss v2 設計稿、分析方案、聯絡信箱與 GPG uid。
 - [ ] 收齊第 3 節的素材，缺的標記為「上線後補」。
 
-完成條件：視覺風格、贊助、self-hosted 工具有結論；精選 4 個專案的素材齊全或有替代方案。
+完成條件：設計稿與分析方案確認；精選 4 個專案的素材齊全或有替代方案。
 
 ### M1 新站骨架（新 branch，不動正式站）
 
@@ -248,17 +272,19 @@ og: ./bragi/og.png        # 1200×630
 
 完成條件：所有卡片連結有效；個案頁中英各 4 篇。
 
-### M4 工具入口與贊助
+### M4 互動與動畫
 
-- [ ] 工具頁：self-hosted 服務與自製工具，資料檔驅動，標示狀態。
-- [ ] 贊助頁或聯絡頁中的贊助區塊。
-- [ ] 動畫：只在首頁精選區與作品卡片使用 Motion，遵守 `prefers-reduced-motion`。
+- [ ] 深淺色切換與 `light-dark()` token。
+- [ ] View Transitions：索引列到個案頁的標題轉場。
+- [ ] 索引預覽、可變字型 hover、scroll-driven 動畫。
+- [ ] ⌘K 指令選單（React island + Motion）。
+- [ ] 全部遵守 `prefers-reduced-motion`。
 
-完成條件：工具與贊助連結全部可用；無 JS 時頁面仍可閱讀。
+完成條件：無 JS 時頁面仍可閱讀；Lighthouse 四項維持 ≥ 95。
 
 ### M5 上線
 
-- [ ] 接上 Umami Cloud（含外連點擊事件），移除 AMP、GA UA 與 cookie 同意框。
+- [ ] 依 M0 結論接上分析（含外連點擊事件），移除 AMP 與 GA UA；若採 Umami 一併移除 cookie 同意框。
 - [ ] 比對舊站網址，必要時在 `netlify.toml` 加 redirect。
 - [ ] 更新 README。
 - [ ] 使用者確認 deploy preview 後，由使用者合併並切換 production。
