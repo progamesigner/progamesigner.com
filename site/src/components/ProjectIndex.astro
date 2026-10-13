@@ -93,7 +93,8 @@ const rows = listed.map((project, index) => {
     </aside>
   </div>
 
-  <p class="mt-5 text-sm text-muted">
+  <p class="mt-5 flex flex-wrap items-baseline justify-between gap-4 text-sm text-muted">
+    <span>
     {t('index.also')}{' '}
     {
       misc.map((project, index) => (
@@ -105,6 +106,8 @@ const rows = listed.map((project, index) => {
         </>
       ))
     }
+    </span>
+    <a class="link font-semibold text-ink" href={localizePath('/work/', locale)}>{t('index.viewAll')} →</a>
   </p>
 </section>
 

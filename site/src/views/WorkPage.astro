@@ -1,0 +1,144 @@
+---
+import ProjectCard from '../components/ProjectCard.astro';
+import { localeFromUrl, translator } from '../i18n/ui';
+import Base from '../layouts/Base.astro';
+import { getProjects, type Project } from '../lib/projects';
+
+const locale = localeFromUrl(Astro.url);
+const t = translator(locale);
+const projects = await getProjects();
+const tiers = ['featured', 'shipped', 'community', 'misc'] as const;
+const byTier = (tier: Project['data']['tier']) => projects.filter((p) => p.data.tier === tier);
+
+// Filter chips: every stack tag, most used first.
+const counts = new Map<string, number>();
+for (const project of projects) for (const tech of project.data.stack) counts.set(tech, (counts.get(tech) ?? 0) + 1);
+const tags = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([tech]) => tech);
+---
+
+<Base title={t('work.title')} description={t('work.description')}>
+  <div class="mx-auto flex max-w-7xl flex-col gap-16 px-4 pt-6 sm:px-8" data-work>
+    <header class="flex flex-col gap-8 border-t border-ink pt-3">
+      <p class="flex justify-between meta">
+        <span>Yang Sheng Han — {t('hero.role')}</span>
+        <span data-work-count data-template={t('work.showing')} aria-live="polite">
+          {t('work.showing', { count: projects.length, total: projects.length })}
+        </span>
+      </p>
+      <h1 class="display text-[clamp(4.5rem,13vw,10.5rem)] tracking-[-0.025em]">{t('work.title')}<span class="text-accent">.</span></h1>
+      <p class="max-w-3xl text-[clamp(1.5rem,2.5vw,2rem)] leading-tight font-semibold tracking-tight">{t('work.lead')}</p>
+    </header>
+
+    <div role="group" aria-label={t('work.filter')} class="flex flex-wrap items-center gap-2" data-work-filter hidden>
+      <span class="mr-2 meta uppercase">{t('work.filter')}</span>
+      <button type="button" data-tag="" aria-pressed="true" class="chip">{t('work.filterAll')}</button>
+      {
+        tags.map((tag) => (
+          <button type="button" data-tag={tag} aria-pressed="false" class="chip">
+            {tag}
+          </button>
+        ))
+      }
+    </div>
+
+    {
+      tiers.map((tier) => {
+        const items = byTier(tier);
+        return (
+          <section aria-labelledby={`work-${tier}`} class="flex flex-col" data-work-section>
+            <div class="flex items-baseline justify-between gap-2 border-b-2 border-ink pb-3">
+              <h2 id={`work-${tier}`} class="text-[13px] font-extrabold tracking-[0.06em] uppercase">
+                {t(`work.section.${tier}`)}
+              </h2>
+              <span class="meta">{String(items.length).padStart(2, '0')}</span>
+            </div>
+            {tier === 'misc' ? (
+              <ul class="grid grid-cols-[repeat(auto-fill,minmax(18rem,1fr))] gap-x-10">
+                {items.map((project) => (
+                  <li data-stack={project.data.stack.join('|')} class="border-b border-rule">
+                    <a
+                      href={project.data.links.source ?? project.data.links.try}
+                      class="index-row flex items-baseline justify-between gap-4 py-3"
+                    >
+                      <span class="flex flex-col">
+                        <span class="index-name font-semibold">{project.data.name}</span>
+                        <span class="text-sm text-muted">{project.data.tagline[locale]}</span>
+                      </span>
+                      <span aria-hidden="true" class="index-arrow text-accent">
+                        ↗
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div
+                class:list={[
+                  'grid gap-6 pt-6',
+                  tier === 'featured'
+                    ? 'grid-cols-[repeat(auto-fill,minmax(min(100%,28rem),1fr))]'
+                    : 'grid-cols-[repeat(auto-fill,minmax(min(100%,17rem),1fr))]',
+                ]}
+              >
+                {items.map((project) => (
+                  <ProjectCard project={project} locale={locale} featured={tier === 'featured'} />
+                ))}
+              </div>
+            )}
+          </section>
+        );
+      })
+    }
+
+    <p class="meta" data-work-empty hidden>{t('work.noMatch')}</p>
+  </div>
+</Base>
+
+<style>
+  .chip {
+    min-height: 2.25rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--color-rule);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+  .chip:hover {
+    border-color: var(--color-ink);
+  }
+  .chip[aria-pressed='true'] {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-bg);
+  }
+</style>
+
+<script>
+  // Progressive enhancement: without JS every project shows and the filter stays hidden.
+  document.addEventListener('astro:page-load', () => {
+    const root = document.querySelector<HTMLElement>('[data-work]');
+    const filter = root?.querySelector<HTMLElement>('[data-work-filter]');
+    if (!root || !filter) return;
+    filter.hidden = false;
+    const items = [...root.querySelectorAll<HTMLElement>('[data-stack]')];
+    const sections = [...root.querySelectorAll<HTMLElement>('[data-work-section]')];
+    const count = root.querySelector<HTMLElement>('[data-work-count]');
+    const empty = root.querySelector<HTMLElement>('[data-work-empty]');
+    const buttons = [...filter.querySelectorAll<HTMLButtonElement>('button[data-tag]')];
+
+    const apply = (tag: string) => {
+      let shown = 0;
+      for (const item of items) {
+        const match = !tag || (item.dataset.stack ?? '').split('|').includes(tag);
+        item.hidden = !match;
+        if (match) shown++;
+      }
+      for (const section of sections) section.hidden = !section.querySelector('[data-stack]:not([hidden])');
+      for (const button of buttons) button.setAttribute('aria-pressed', String(button.dataset.tag === tag));
+      if (count) count.textContent = (count.dataset.template ?? '').replace('{count}', String(shown)).replace('{total}', String(items.length));
+      if (empty) empty.hidden = shown > 0;
+    };
+
+    for (const button of buttons) button.addEventListener('click', () => apply(button.dataset.tag ?? ''));
+  });
+</script>

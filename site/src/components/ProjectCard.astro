@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import { type Locale, localizePath, translator } from '../i18n/ui';
+import { caseStudyPath, type Project } from '../lib/projects';
+
+interface Props {
+  project: Project;
+  locale: Locale;
+  featured?: boolean;
+}
+
+const { project, locale, featured = false } = Astro.props;
+const t = translator(locale);
+const { name, tagline, stack, status, year, links, cover } = project.data;
+// Featured work links to its case study; everything else links straight to the project.
+const href = featured ? localizePath(caseStudyPath(project), locale) : (links.try ?? links.source);
+---
+
+<article
+  data-stack={stack.join('|')}
+  class="group relative flex flex-col border border-rule bg-surface transition-colors hover:border-ink focus-within:border-ink"
+>
+  <div class:list={['relative overflow-hidden border-b border-rule', featured ? 'aspect-[16/9]' : 'aspect-[16/10]']}>
+    {
+      cover ? (
+        <Image
+          src={cover}
+          alt=""
+          widths={[480, 960]}
+          sizes={featured ? '(min-width: 1024px) 40vw, 100vw' : '(min-width: 1024px) 26vw, (min-width: 640px) 45vw, 100vw'}
+          loading="lazy"
+          class="size-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02] dark:brightness-85"
+        />
+      ) : (
+        <div aria-hidden="true" class="flex size-full flex-col justify-between bg-ink p-6 text-bg">
+          <span class="font-mono text-xs opacity-75">{stack.join(' · ')}</span>
+          <span class:list={['display', featured ? 'text-7xl' : 'text-5xl']}>{name}</span>
+        </div>
+      )
+    }
+  </div>
+  <div class="flex flex-1 flex-col gap-3 p-5">
+    <div class="flex items-center justify-between gap-3 meta">
+      <span class="flex items-center gap-1.5 uppercase">
+        {status === 'live' && <span aria-hidden="true" class="inline-block size-1.5 rounded-full bg-live" />}
+        {t(`status.${status}`)}
+      </span>
+      <span>{year}</span>
+    </div>
+    <h3 class:list={['font-extrabold leading-tight [font-stretch:85%]', featured ? 'text-4xl' : 'text-2xl']}>
+      <a href={href} class="after:absolute after:inset-0 focus-visible:outline-none" transition:name={featured ? `project-${project.id}` : undefined}>
+        {name}
+      </a>
+    </h3>
+    <p class="text-[15px] text-muted">{tagline[locale]}</p>
+    <ul class="mt-auto flex flex-wrap gap-1.5 pt-2" aria-label={t('case.stack')}>
+      {stack.map((tech) => <li class="border border-rule px-2 py-0.5 font-mono text-[11px]">{tech}</li>)}
+    </ul>
+    <div class="relative z-10 flex flex-wrap gap-x-5 gap-y-1 text-sm font-semibold">
+      {featured && <span class="text-accent">{t('work.readCase')} →</span>}
+      {!featured && links.try && <a class="link" href={links.try}>{t('case.try')} ↗</a>}
+      {!featured && links.source && <a class="link" href={links.source}>{t('case.source')} ↗</a>}
+    </div>
+  </div>
+</article>

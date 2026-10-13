@@ -1,0 +1,61 @@
+---
+// A left-to-right flow of steps; it stacks top-to-bottom on narrow screens.
+interface Props {
+  caption: string;
+  steps: { label: string; detail: string }[];
+}
+
+const { caption, steps } = Astro.props;
+---
+
+<figure class="reveal flex flex-col gap-4">
+  <ol class="flow grid gap-0 border border-ink">
+    {
+      steps.map((step, index) => (
+        <li class="flow-step relative flex flex-col gap-3 border-ink bg-surface p-6">
+          <span class="font-mono text-xs text-accent">{String(index + 1).padStart(2, '0')}</span>
+          <span class="display text-3xl">{step.label}</span>
+          <span class="text-sm text-muted">{step.detail}</span>
+        </li>
+      ))
+    }
+  </ol>
+  <figcaption class="meta">{caption}</figcaption>
+</figure>
+
+<style>
+  .flow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .flow-step + .flow-step {
+    border-top-width: 1px;
+  }
+  /* Arrow between steps: points down when stacked, right when in a row. */
+  .flow-step + .flow-step::before {
+    content: '↓';
+    position: absolute;
+    top: -0.85rem;
+    left: 1.5rem;
+    padding: 0 0.375rem;
+    background: var(--color-bg);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    line-height: 1.5rem;
+  }
+  @media (min-width: 48rem) {
+    .flow {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+    }
+    .flow-step + .flow-step {
+      border-top-width: 0;
+      border-left-width: 1px;
+    }
+    .flow-step + .flow-step::before {
+      content: '→';
+      top: 1.25rem;
+      left: -0.85rem;
+      padding: 0.25rem 0;
+    }
+  }
+</style>

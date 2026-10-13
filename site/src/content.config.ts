@@ -33,6 +33,12 @@ const caseStudies = defineCollection({
       summary: z.string(),
       role: z.string(),
       facts: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
+      diagram: z
+        .object({
+          caption: z.string(),
+          steps: z.array(z.object({ label: z.string(), detail: z.string() })).min(2),
+        })
+        .optional(),
       draft: z.boolean().default(false),
     })
     .strict(),

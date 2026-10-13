@@ -1,6 +1,6 @@
 # progamesigner.com 2026 改版與作品集計畫
 
-> 狀態：M1 骨架完成、M2 首頁／聯絡／SEO 實作中（2026-10-13）。Swiss v2 設計稿已確認。新站在 `site/`，正式站與 Netlify 設定未變動。
+> 狀態：M1、M2、M3 完成（2026-10-13），下一步 M4 互動與動畫。Swiss v2 設計稿已確認。新站在 `site/`，正式站與 Netlify 設定未變動。
 > 盤點日期：2026-10-13。版本號為當日 npm／repo 查證值，動工時再確認。
 
 ## 1. 現況盤點
@@ -283,12 +283,12 @@ accent 備選：鼠尾草綠 `#5E7F6B`、灰藍 `#4F6D8F`、赭黃 `#B8862E`，�
 
 ### M3 作品集
 
-- [ ] content collection schema 與上方欄位一致，缺欄位 build 失敗。
-- [ ] 作品總覽頁：依 tier 分區，可用技術標籤篩選。
-- [ ] 4 篇精選個案頁與架構圖。
-- [ ] 工具、社群卡片與其他列表。
-- [ ] 自動擷取工具站截圖；Bragi 用使用者提供的素材。
-- [ ] 每個專案產生 OG 圖。
+- [x] content collection schema 嚴格驗證（`.strict()`，缺 tagline、連結或 diagram 步驟不足時 build 失敗）；個案新增 `diagram` 欄位。
+- [x] 作品總覽頁 `/work/`、`/zh-tw/work/`：依 tier 分「精選作品／工具／社群／其他」四區，可用技術標籤篩選（無 JS 時全部顯示、篩選列隱藏）。導覽列「作品」改連到此頁，首頁索引加「看所有作品」。
+- [x] 4 篇精選個案頁（中英各 4 篇）皆有流程圖。Bragi 為正式內容；Muninn、Sleipnir、Homelab 依公開 README 撰寫問題／限制／運作方式／決策，「成果」為 `PLACEHOLDER`，三篇仍為 `draft: true`（noindex、不進 sitemap）。
+- [x] 工具、社群卡片（截圖、狀態、年份、技術標籤、Try／Source）與其他列表；只放有公開網址的專案。
+- [x] 工具站截圖已自動擷取；Bragi 校對與朗讀畫面仍是標示 `PLACEHOLDER` 的空框，待使用者提供。
+- [x] 每個專案在 build 時用 Satori 產生 OG 圖 `/og/<project>.png`（英文文字，中英共用），個案頁使用該圖。
 
 完成條件：所有卡片連結有效；個案頁中英各 4 篇。
 

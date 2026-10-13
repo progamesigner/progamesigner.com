@@ -3,6 +3,13 @@ project: bragi
 lang: zh-tw
 summary: "手機優先的桌遊口白助手。拍下劇本、校對文字，逐段朗讀，每段唸完就停下來等主持人。"
 role: 設計、開發、維運
+diagram:
+  caption: 從照片到朗讀
+  steps:
+    - { label: 拍照, detail: "用手機拍下劇本或卡牌" }
+    - { label: Gemini OCR, detail: "文字轉成可編輯的草稿" }
+    - { label: 校對, detail: "主持人在唸出來前先改錯" }
+    - { label: 朗讀, detail: "Gemini TTS 唸一段，然後等待" }
 facts:
   - { value: "7", label: 種介面語言 }
   - { value: "30", label: 種朗讀聲音 }

@@ -5,8 +5,9 @@ const locale = localeFromUrl(Astro.url);
 const t = translator(locale);
 const home = localizePath('/', locale);
 const contact = localizePath('/contact/', locale);
+const work = localizePath('/work/', locale);
 const links = [
-  { label: t('nav.work'), href: localizePath('/#index', locale), current: false },
+  { label: t('nav.work'), href: work, current: Astro.url.pathname.startsWith(work) },
   { label: t('nav.about'), href: localizePath('/#about', locale), current: false },
   { label: t('nav.contact'), href: contact, current: Astro.url.pathname === contact },
 ];

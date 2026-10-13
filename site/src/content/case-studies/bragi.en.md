@@ -3,6 +3,13 @@ project: bragi
 lang: en
 summary: "A phone-first narrator for board games. Photograph a script, fix the text, and it reads each passage aloud, then waits for the host."
 role: Design, build, operate
+diagram:
+  caption: From photo to narration
+  steps:
+    - { label: Photo, detail: "A script or card, taken on the phone" }
+    - { label: Gemini OCR, detail: "Text becomes an editable draft" }
+    - { label: Proofread, detail: "The host fixes mistakes before anyone hears them" }
+    - { label: Narrate, detail: "Gemini TTS reads one passage, then waits" }
 facts:
   - { value: "7", label: interface languages }
   - { value: "30", label: narration voices }

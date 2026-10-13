@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import bragiDark from '../assets/projects/bragi-mobile-dark.png';
 import bragiLight from '../assets/projects/bragi-mobile-light.png';
+import FlowDiagram from '../components/FlowDiagram.astro';
 import { localeFromUrl, localizePath, translator } from '../i18n/ui';
 import Base from '../layouts/Base.astro';
 import { type CaseStudy, caseStudyPath, type Project } from '../lib/projects';
@@ -21,23 +22,38 @@ const t = translator(locale);
 const { Content } = await render(study);
 const no = (n: number) => String(n).padStart(2, '0');
 
-// Screens per project. Placeholders mark captures that still need a signed-in session.
+// Screens per project. Entries without `src` are placeholders for captures that
+// still need a signed-in session; they render as a labelled empty frame.
+const zh = locale === 'zh-tw';
 const screens: Record<string, { src?: ImageMetadata; alt: string; caption: string }[]> = {
   bragi: [
-    { src: bragiLight, alt: 'Bragi sign-in screen, light theme', caption: '01 · Sign in' },
-    { alt: 'Proofread screen', caption: '02 · Proofread' },
-    { alt: 'Narration screen', caption: '03 · Narrate' },
-    { src: bragiDark, alt: 'Bragi sign-in screen, dark theme', caption: 'Dark theme' },
+    {
+      src: bragiLight,
+      alt: zh ? 'Bragi 登入畫面，淺色' : 'Bragi sign-in screen, light theme',
+      caption: zh ? '01 · 登入' : '01 · Sign in',
+    },
+    { alt: zh ? '校對畫面' : 'Proofread screen', caption: zh ? '02 · 校對' : '02 · Proofread' },
+    { alt: zh ? '朗讀畫面' : 'Narration screen', caption: zh ? '03 · 朗讀' : '03 · Narrate' },
+    {
+      src: bragiDark,
+      alt: zh ? 'Bragi 登入畫面，深色' : 'Bragi sign-in screen, dark theme',
+      caption: zh ? '深色模式' : 'Dark theme',
+    },
   ],
 };
 const shots = screens[project.id] ?? [];
 ---
 
-<Base title={project.data.name} description={study.data.summary} noindex={study.data.draft}>
+<Base
+  title={project.data.name}
+  description={study.data.summary}
+  image={`/og/${project.id}.png`}
+  noindex={study.data.draft}
+>
   <article class="mx-auto flex max-w-7xl flex-col gap-20 px-4 pt-6 sm:px-8">
     <header class="flex flex-col gap-8 border-t border-ink pt-4">
       <nav aria-label={t('case.breadcrumb')} class="flex justify-between meta">
-        <span><a class="link" href={localizePath('/#index', locale)}>{t('case.index')}</a> / {no(index + 1)}</span>
+        <span><a class="link" href={localizePath('/work/', locale)}>{t('nav.work')}</a> / {no(index + 1)}</span>
         <span>{t('case.label')} {no(index + 1)} / {no(total)}</span>
       </nav>
       <h1 class="display text-[clamp(4.5rem,15vw,12.5rem)] tracking-[-0.025em]" transition:name={`project-${project.id}`}>
@@ -75,7 +91,7 @@ const shots = screens[project.id] ?? [];
                 <Image src={shot.src} alt={shot.alt} widths={[320, 640]} sizes="(min-width: 768px) 22vw, 90vw" class="aspect-[390/844] w-full rounded-[28px] border-[6px] border-ink object-cover object-top" />
               ) : (
                 <div class="flex aspect-[390/844] w-full items-center justify-center rounded-[28px] border-[6px] border-dashed border-muted p-6 text-center meta">
-                  [{shot.alt}]
+                  PLACEHOLDER · {shot.alt}
                 </div>
               )}
               <figcaption class="meta">{shot.caption}</figcaption>
@@ -84,6 +100,8 @@ const shots = screens[project.id] ?? [];
         </section>
       )
     }
+
+    {study.data.diagram && <FlowDiagram {...study.data.diagram} />}
 
     <div class="case-body reveal">
       <Content />
