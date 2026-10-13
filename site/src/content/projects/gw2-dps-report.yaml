@@ -1,0 +1,11 @@
+order: 11
+tier: community
+name: gw2-dps-report
+tagline:
+  en: "Upload Guild Wars 2 combat logs and post the results to Discord."
+  zh-tw: "自動把 Guild Wars 2 戰鬥紀錄貼到 Discord。"
+status: maintained
+year: "2018—"
+stack: ["Rust", "Discord"]
+links:
+  source: https://github.com/progamesigner/gw2-dps-report

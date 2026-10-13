@@ -1,0 +1,13 @@
+order: 7
+tier: shipped
+name: Open Search Maker
+tagline:
+  en: "Search any site from the browser address bar."
+  zh-tw: "從瀏覽器網址列直接搜尋任何網站。"
+status: live
+year: "2024"
+stack: ["Next.js"]
+links:
+  try: https://open-search-maker.0x148.com
+  source: https://github.com/progamesigner/open-search-maker
+cover: ../../assets/projects/open-search-maker.png

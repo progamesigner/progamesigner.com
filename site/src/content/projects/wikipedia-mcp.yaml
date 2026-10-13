@@ -1,0 +1,11 @@
+order: 9
+tier: shipped
+name: Wikipedia MCP
+tagline:
+  en: "Let AI assistants look things up on Wikipedia."
+  zh-tw: "讓 AI 助手查維基百科。"
+status: maintained
+year: "2025"
+stack: ["Python", "MCP"]
+links:
+  source: https://github.com/progamesigner/wikipedia-mcp

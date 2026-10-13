@@ -1,0 +1,11 @@
+order: 1
+tier: featured
+name: Muninn
+tagline:
+  en: "Durable, multi-tenant memory for AI agents over a plain-markdown vault."
+  zh-tw: "以純 Markdown 保存、可多租戶的 AI agent 長期記憶。"
+status: maintained
+year: "2026"
+stack: ["Rust", "MCP"]
+links:
+  source: https://github.com/progamesigner/muninn

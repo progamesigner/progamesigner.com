@@ -1,0 +1,132 @@
+---
+import { Image } from 'astro:assets';
+import { localeFromUrl, localizePath, translator } from '../i18n/ui';
+import { getProjects, primaryLink } from '../lib/projects';
+
+const locale = localeFromUrl(Astro.url);
+const t = translator(locale);
+const projects = await getProjects();
+const listed = projects.filter((p) => p.data.tier !== 'misc');
+const misc = projects.filter((p) => p.data.tier === 'misc');
+const live = listed.filter((p) => p.data.status === 'live').length;
+
+const rows = listed.map((project, index) => {
+  const href = primaryLink(project);
+  const internal = href.startsWith('/');
+  return {
+    project,
+    no: String(index + 1).padStart(2, '0'),
+    href: internal ? localizePath(href, locale) : href,
+    internal,
+  };
+});
+---
+
+<section id="index" class="reveal scroll-mt-8">
+  <div class="flex flex-wrap items-baseline justify-between gap-2 border-b-2 border-ink pb-3">
+    <h2 class="text-[13px] font-extrabold tracking-[0.06em] uppercase">{t('index.title')}</h2>
+    <span class="meta">{t('index.count', { total: listed.length, live })}</span>
+  </div>
+
+  <div class="flex flex-wrap items-start gap-10" data-project-index>
+    <ol class="min-w-0 flex-[999_1_37.5rem]">
+      {
+        rows.map(({ project, no, href, internal }, index) => (
+          <li>
+            <a
+              href={href}
+              data-preview={index}
+              data-active={index === 0 ? '' : undefined}
+              class="index-row -mx-3 flex flex-wrap items-baseline gap-x-5 gap-y-1.5 border-b border-rule px-3 py-[18px] data-active:bg-hover"
+              transition:name={internal ? `project-${project.id}` : undefined}
+            >
+              <span class="w-9 flex-none font-mono text-xs text-muted">{no}</span>
+              <span class="index-name flex-[1_1_16rem] font-sans text-[34px] leading-[1.05] font-extrabold [font-stretch:80%]">
+                {project.data.name}
+              </span>
+              <span class="flex-[2_1_17.5rem] text-[15px] text-muted">{project.data.tagline[locale]}</span>
+              <span class="flex w-26 flex-none items-center gap-1.5 font-mono text-[11px] tracking-[0.04em] uppercase">
+                {project.data.status === 'live' && <span aria-hidden="true" class="inline-block size-1.5 rounded-full bg-live" />}
+                {t(`tier.${project.data.tier}`)}
+              </span>
+              <span aria-hidden="true" class="index-arrow w-4 flex-none text-accent">
+                {internal ? '→' : '↗'}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+
+    <aside aria-label={t('index.preview')} class="sticky top-6 hidden flex-[1_1_22.5rem] flex-col gap-3 pt-[18px] md:flex">
+      <div class="relative aspect-[16/10] overflow-hidden border border-rule bg-surface">
+        {
+          rows.map(({ project }, index) => (
+            <div data-preview-pane={index} class:list={['absolute inset-0', index !== 0 && 'hidden']}>
+              {project.data.cover ? (
+                <Image
+                  src={project.data.cover}
+                  alt={`${project.data.name} screenshot`}
+                  widths={[480, 960]}
+                  sizes="(min-width: 768px) 30vw, 100vw"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  class="size-full object-cover object-top dark:brightness-85"
+                />
+              ) : (
+                <div class="flex size-full flex-col justify-between bg-ink p-6 text-bg">
+                  <span class="font-mono text-xs opacity-75">{project.data.stack.join(' · ')}</span>
+                  <span class="display text-7xl">{project.data.name}</span>
+                </div>
+              )}
+            </div>
+          ))
+        }
+      </div>
+      {
+        rows.map(({ project }, index) => (
+          <div data-preview-meta={index} class:list={['flex justify-between gap-3 meta', index !== 0 && 'hidden']}>
+            <span>{project.data.stack.join(' · ')}</span>
+            <span>{project.data.year}</span>
+          </div>
+        ))
+      }
+    </aside>
+  </div>
+
+  <p class="mt-5 text-sm text-muted">
+    {t('index.also')}{' '}
+    {
+      misc.map((project, index) => (
+        <>
+          <a class="link" href={project.data.links.source ?? project.data.links.try}>
+            {project.data.name}
+          </a>
+          {index < misc.length - 1 ? ', ' : '.'}
+        </>
+      ))
+    }
+  </p>
+</section>
+
+<script>
+  // Swap the preview pane to whichever row is hovered or focused.
+  document.addEventListener('astro:page-load', () => {
+    const root = document.querySelector('[data-project-index]');
+    if (!root) return;
+    const show = (index: string) => {
+      for (const el of root.querySelectorAll<HTMLElement>('[data-preview-pane], [data-preview-meta]')) {
+        const own = el.dataset.previewPane ?? el.dataset.previewMeta;
+        el.classList.toggle('hidden', own !== index);
+      }
+      for (const row of root.querySelectorAll<HTMLElement>('[data-preview]')) {
+        row.toggleAttribute('data-active', row.dataset.preview === index);
+      }
+    };
+    for (const row of root.querySelectorAll<HTMLElement>('[data-preview]')) {
+      const index = row.dataset.preview;
+      if (index === undefined) continue;
+      row.addEventListener('mouseenter', () => show(index));
+      row.addEventListener('focus', () => show(index));
+    }
+  });
+</script>

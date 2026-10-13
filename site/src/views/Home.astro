@@ -1,0 +1,62 @@
+---
+import Contact from '../components/Contact.astro';
+import ProjectIndex from '../components/ProjectIndex.astro';
+import { localeFromUrl, translator } from '../i18n/ui';
+import Base from '../layouts/Base.astro';
+
+const locale = localeFromUrl(Astro.url);
+const t = translator(locale);
+const stack = [
+  'Rust',
+  'TypeScript',
+  'Go',
+  'Python',
+  'Kubernetes',
+  'MCP',
+  'Astro',
+  'SolidStart',
+  'SvelteKit',
+  'Ansible',
+];
+---
+
+<Base>
+  <div class="mx-auto flex max-w-7xl flex-col gap-10 px-4 pt-6 sm:px-8">
+    <div class="flex flex-wrap justify-between gap-3 border-t border-ink pt-3 meta">
+      <span>Yang Sheng Han — {t('hero.role')}</span>
+      <span>{t('hero.place')} · 25.03°N 121.56°E</span>
+    </div>
+    <h1 class="display text-[clamp(4.5rem,13vw,10.5rem)] tracking-[-0.025em] break-words" transition:name="site-title">
+      Progam<wbr />esigner<span class="text-accent">.</span>
+    </h1>
+    <div id="about" class="grid scroll-mt-8 grid-cols-[repeat(auto-fit,minmax(17.5rem,1fr))] items-start gap-10">
+      <p class="text-3xl leading-tight font-semibold tracking-tight">{t('hero.lead')}</p>
+      <p class="text-[17px] text-muted">{t('hero.sub')}</p>
+      <div class="flex flex-col gap-2.5 border border-rule bg-surface p-5">
+        <span class="flex items-center gap-2 font-mono text-xs tracking-[0.06em] uppercase">
+          <span aria-hidden="true" class="pulse-dot inline-block size-2 rounded-full bg-live"></span>{t('now.title')}
+        </span>
+        <a href="https://github.com/progamesigner/muninn" class="link font-semibold">Muninn — {t('now.muninn')}</a>
+        <a href="https://github.com/progamesigner/sleipnir" class="link font-semibold">Sleipnir — {t('now.sleipnir')}</a>
+      </div>
+    </div>
+  </div>
+
+  <div aria-hidden="true" class="mt-22 overflow-hidden border-y border-rule font-mono text-[13px] whitespace-nowrap text-muted">
+    <div class="ticker inline-flex gap-10 py-3.5">
+      {
+        [...stack, ...stack].map((item) => (
+          <>
+            <span>{item}</span>
+            <span class="text-accent">/</span>
+          </>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="mx-auto flex max-w-7xl flex-col gap-28 px-4 pt-22 sm:px-8">
+    <ProjectIndex />
+    <Contact />
+  </div>
+</Base>

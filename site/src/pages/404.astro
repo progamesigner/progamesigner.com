@@ -1,0 +1,19 @@
+---
+import { translator } from '../i18n/ui';
+import Base from '../layouts/Base.astro';
+
+// Netlify serves this page for every missing path, so it shows both languages.
+const en = translator('en');
+const zh = translator('zh-tw');
+---
+
+<Base title={en('404.title')} noindex>
+  <section class="mx-auto flex max-w-7xl flex-col gap-8 px-4 pt-6 sm:px-8">
+    <p class="border-t border-ink pt-3 meta">404</p>
+    <h1 class="display text-[clamp(4.5rem,13vw,10.5rem)]">{en('404.title')}<span class="text-accent">.</span></h1>
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(17.5rem,1fr))] gap-10">
+      <p class="flex flex-col gap-3"><span>{en('404.body')}</span><a class="link" href="/#index">{en('404.back')}</a></p>
+      <p lang="zh-Hant-TW" class="flex flex-col gap-3 font-[family-name:var(--font-cjk)]"><span>{zh('404.body')}</span><a class="link" href="/zh-tw/#index">{zh('404.back')}</a></p>
+    </div>
+  </section>
+</Base>

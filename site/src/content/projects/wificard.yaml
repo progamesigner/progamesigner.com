@@ -1,0 +1,13 @@
+order: 5
+tier: shipped
+name: Wi-Fi Card
+tagline:
+  en: "Print a QR card so guests can join your Wi-Fi."
+  zh-tw: "印一張 QR 卡，客人掃了就能連 Wi-Fi。"
+status: live
+year: "2023"
+stack: ["SvelteKit", "Tailwind CSS"]
+links:
+  try: https://wificard.0x148.com
+  source: https://github.com/progamesigner/wificard
+cover: ../../assets/projects/wificard.png

@@ -1,0 +1,12 @@
+---
+import { localeFromUrl, translator } from '../i18n/ui';
+
+const t = translator(localeFromUrl(Astro.url));
+const year = new Date().getFullYear();
+const analytics = Boolean(import.meta.env.PUBLIC_GA_ID);
+---
+
+<footer class="mx-auto mt-28 flex max-w-7xl flex-wrap justify-between gap-3 border-t border-rule px-4 pt-6 pb-10 meta sm:px-8">
+  <span>© {year} Yang Sheng Han</span>
+  <span>{t('footer.built')}{analytics && ` · ${t('footer.analytics')}`}</span>
+</footer>

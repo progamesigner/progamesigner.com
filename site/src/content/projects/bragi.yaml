@@ -1,0 +1,13 @@
+order: 3
+tier: featured
+name: Bragi
+tagline:
+  en: "Photograph a board game script and have it read aloud, one passage at a time."
+  zh-tw: "拍下桌遊劇本，逐段用合適的語氣朗讀。"
+status: live
+year: "2026"
+stack: ["SolidStart", "Gemini", "TTS"]
+links:
+  try: https://bragi.0x148.com
+  source: https://github.com/progamesigner/bragi
+cover: ../../assets/projects/bragi.png

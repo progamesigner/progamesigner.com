@@ -1,0 +1,92 @@
+---
+import { localeFromUrl, localizePath, switchLocalePath, translator } from '../i18n/ui';
+
+const locale = localeFromUrl(Astro.url);
+const t = translator(locale);
+const home = localizePath('/', locale);
+const languages = [
+  { code: 'en', label: 'EN', href: switchLocalePath(Astro.url, 'en') },
+  { code: 'zh-tw', label: '中文', href: switchLocalePath(Astro.url, 'zh-tw') },
+] as const;
+---
+
+<header class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-6 text-[13px] font-medium tracking-[0.06em] uppercase sm:px-8">
+  <a href={home} class="flex items-center gap-2.5 font-extrabold">
+    <span aria-hidden="true" class="inline-block size-3 bg-accent" transition:name="brand-mark"></span>progamesigner
+  </a>
+  <nav aria-label={t('nav.primary')} class="flex flex-wrap items-center gap-x-6 gap-y-2">
+    <a href={`${home}#index`}>{t('nav.work')}</a>
+    <a href={`${home}#about`}>{t('nav.about')}</a>
+    <a href={`${home}#contact`}>{t('nav.contact')}</a>
+    <a href="https://0x148.com">{t('nav.blog')} ↗</a>
+    <div role="group" aria-label={t('nav.language')} class="flex border border-rule">
+      {
+        languages.map((lang) => (
+          <a
+            href={lang.href}
+            hreflang={lang.code === 'en' ? 'en' : 'zh-Hant-TW'}
+            aria-current={lang.code === locale ? 'true' : undefined}
+            class:list={[
+              'flex h-9 min-w-11 items-center justify-center px-2.5 text-xs',
+              lang.code === locale ? 'bg-ink text-bg' : 'text-muted hover:text-ink',
+            ]}
+          >
+            {lang.label}
+          </a>
+        ))
+      }
+    </div>
+    <button
+      type="button"
+      data-theme-toggle
+      aria-label={t('theme.toggle')}
+      class="flex h-9 w-11 cursor-pointer items-center justify-center border border-rule bg-surface text-ink"
+    >
+      <svg class="theme-icon-moon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg>
+      <svg class="theme-icon-sun" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+    </button>
+  </nav>
+</header>
+
+<style>
+  /* Show the icon for the mode the button switches to. */
+  .theme-icon-sun {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .theme-icon-sun {
+    display: block;
+  }
+  :global(:root[data-theme='dark']) .theme-icon-moon {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .theme-icon-sun {
+      display: block;
+    }
+    :global(:root:not([data-theme='light'])) .theme-icon-moon {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function isDark() {
+    const explicit = document.documentElement.dataset.theme;
+    if (explicit) return explicit === 'dark';
+    return matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+    if (!button) return;
+    button.setAttribute('aria-pressed', String(isDark()));
+    button.addEventListener('click', () => {
+      const next = isDark() ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      button.setAttribute('aria-pressed', String(next === 'dark'));
+      try {
+        localStorage.setItem('theme', next);
+      } catch {}
+    });
+  });
+</script>

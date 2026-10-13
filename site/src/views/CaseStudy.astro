@@ -1,0 +1,173 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import bragiDark from '../assets/projects/bragi-mobile-dark.png';
+import bragiLight from '../assets/projects/bragi-mobile-light.png';
+import { localeFromUrl, localizePath, translator } from '../i18n/ui';
+import Base from '../layouts/Base.astro';
+import { type CaseStudy, caseStudyPath, type Project } from '../lib/projects';
+
+interface Props {
+  project: Project;
+  study: CaseStudy;
+  index: number;
+  total: number;
+  next: Project;
+}
+
+const { project, study, index, total, next } = Astro.props;
+const locale = localeFromUrl(Astro.url);
+const t = translator(locale);
+const { Content } = await render(study);
+const no = (n: number) => String(n).padStart(2, '0');
+
+// Screens per project. Placeholders mark captures that still need a signed-in session.
+const screens: Record<string, { src?: ImageMetadata; alt: string; caption: string }[]> = {
+  bragi: [
+    { src: bragiLight, alt: 'Bragi sign-in screen, light theme', caption: '01 · Sign in' },
+    { alt: 'Proofread screen', caption: '02 · Proofread' },
+    { alt: 'Narration screen', caption: '03 · Narrate' },
+    { src: bragiDark, alt: 'Bragi sign-in screen, dark theme', caption: 'Dark theme' },
+  ],
+};
+const shots = screens[project.id] ?? [];
+---
+
+<Base title={project.data.name} description={study.data.summary} noindex={study.data.draft}>
+  <article class="mx-auto flex max-w-7xl flex-col gap-20 px-4 pt-6 sm:px-8">
+    <header class="flex flex-col gap-8 border-t border-ink pt-4">
+      <nav aria-label="Breadcrumb" class="flex justify-between meta">
+        <span><a class="link" href={`${localizePath('/', locale)}#index`}>Index</a> / {no(index + 1)}</span>
+        <span>{t('case.label')} {no(index + 1)} / {no(total)}</span>
+      </nav>
+      <h1 class="display text-[clamp(4.5rem,15vw,12.5rem)] tracking-[-0.025em]" transition:name={`project-${project.id}`}>
+        {project.data.name}<span class="text-accent">.</span>
+      </h1>
+      <p class="max-w-4xl text-[clamp(1.5rem,2.5vw,2rem)] leading-tight font-semibold tracking-tight">{study.data.summary}</p>
+      {study.data.draft && <p class="w-fit border border-rule bg-surface px-3 py-2 meta">{t('case.draft')}</p>}
+      <dl class="grid grid-cols-[repeat(auto-fit,minmax(11rem,1fr))] gap-6 border-t border-rule pt-5">
+        <div class="flex flex-col gap-1"><dt class="meta uppercase">{t('case.role')}</dt><dd>{study.data.role}</dd></div>
+        <div class="flex flex-col gap-1"><dt class="meta uppercase">{t('case.year')}</dt><dd>{project.data.year}</dd></div>
+        <div class="flex flex-col gap-1"><dt class="meta uppercase">{t('case.stack')}</dt><dd>{project.data.stack.join(', ')}</dd></div>
+        <div class="flex flex-col gap-1">
+          <dt class="meta uppercase">{t('case.status')}</dt>
+          <dd class="flex items-center gap-2">
+            {project.data.status === 'live' && <span aria-hidden="true" class="inline-block size-2 rounded-full bg-live" />}
+            {t(`status.${project.data.status}`)}
+          </dd>
+        </div>
+        <div class="flex flex-col gap-1">
+          <dt class="meta uppercase">{t('case.links')}</dt>
+          <dd class="flex gap-4">
+            {project.data.links.try && <a class="link" href={project.data.links.try}>{t('case.try')} ↗</a>}
+            {project.data.links.source && <a class="link" href={project.data.links.source}>{t('case.source')} ↗</a>}
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    {
+      shots.length > 0 && (
+        <section aria-label={t('case.screens')} class="grid grid-cols-[repeat(auto-fit,minmax(13rem,1fr))] gap-6 bg-hover p-6 sm:p-12">
+          {shots.map((shot) => (
+            <figure class="flex flex-col gap-3">
+              {shot.src ? (
+                <Image src={shot.src} alt={shot.alt} widths={[320, 640]} sizes="(min-width: 768px) 22vw, 90vw" class="aspect-[390/844] w-full rounded-[28px] border-[6px] border-ink object-cover object-top" />
+              ) : (
+                <div class="flex aspect-[390/844] w-full items-center justify-center rounded-[28px] border-[6px] border-dashed border-muted p-6 text-center meta">
+                  [{shot.alt}]
+                </div>
+              )}
+              <figcaption class="meta">{shot.caption}</figcaption>
+            </figure>
+          ))}
+        </section>
+      )
+    }
+
+    <div class="case-body reveal">
+      <Content />
+    </div>
+
+    {
+      study.data.facts.length > 0 && (
+        <section aria-label={t('case.outcome')} class="grid grid-cols-[repeat(auto-fit,minmax(12.5rem,1fr))] gap-px border border-rule bg-rule">
+          {study.data.facts.map((fact) => (
+            <div class="flex flex-col gap-1.5 bg-surface px-6 py-7">
+              <span class="display text-6xl">{fact.value}</span>
+              <span class="text-sm text-muted">{fact.label}</span>
+            </div>
+          ))}
+        </section>
+      )
+    }
+
+    <a href={localizePath(caseStudyPath(next), locale)} class="flex flex-wrap items-baseline justify-between gap-4 border-t-2 border-ink border-b border-b-rule py-8">
+      <span class="meta">{t('case.next')}</span>
+      <span class="display text-[clamp(3rem,7vw,4.5rem)]">{next.data.name} <span class="text-accent">→</span></span>
+    </a>
+  </article>
+</Base>
+
+<style>
+  /* Each H2 in the markdown body becomes a numbered row: label on the left, prose on the right. */
+  .case-body {
+    counter-reset: section;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    border-bottom: 1px solid var(--color-ink);
+  }
+  .case-body :global(h2) {
+    counter-increment: section;
+    margin: 0;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--color-ink);
+    font-size: 2.25rem;
+    line-height: 1;
+    font-weight: 850;
+    font-stretch: 75%;
+    text-transform: uppercase;
+  }
+  .case-body :global(h2)::before {
+    content: counter(section, decimal-leading-zero);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--color-accent);
+  }
+  .case-body :global(:is(p, ul)) {
+    max-width: 47.5rem;
+    margin: 1rem 0 0;
+  }
+  .case-body :global(ul) {
+    padding-left: 1.25rem;
+    list-style: square;
+  }
+  .case-body :global(li + li) {
+    margin-top: 0.5rem;
+  }
+  .case-body :global(:is(p, ul):has(+ h2)),
+  .case-body :global(:is(p, ul):last-child) {
+    margin-bottom: 2.5rem;
+  }
+  @media (min-width: 64rem) {
+    .case-body {
+      grid-template-columns: 16rem minmax(0, 1fr);
+      column-gap: 3rem;
+    }
+    .case-body :global(h2) {
+      grid-column: 1;
+    }
+    .case-body :global(:is(p, ul)) {
+      grid-column: 2;
+    }
+    /* Paragraphs share the H2's row border so each section reads as one band. */
+    .case-body :global(h2 + :is(p, ul)) {
+      border-top: 1px solid var(--color-ink);
+      padding-top: 2.5rem;
+      margin-top: 0;
+    }
+  }
+</style>

@@ -1,0 +1,11 @@
+order: 15
+tier: misc
+name: dotfiles
+tagline:
+  en: "A new machine feels like home in minutes."
+  zh-tw: "幾分鐘內讓新電腦用起來像自己的。"
+status: maintained
+year: "2015—"
+stack: ["Shell"]
+links:
+  source: https://github.com/progamesigner/dotfiles

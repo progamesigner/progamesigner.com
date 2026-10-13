@@ -1,0 +1,11 @@
+order: 2
+tier: featured
+name: Sleipnir
+tagline:
+  en: "A personal fleet of coding agents, steered from a phone."
+  zh-tw: "用手機指揮的個人 coding agent 團隊。"
+status: maintained
+year: "2026"
+stack: ["Agents", "Containers"]
+links:
+  source: https://github.com/progamesigner/sleipnir

@@ -1,0 +1,152 @@
+@import "tailwindcss";
+@import "@fontsource-variable/archivo/wdth.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource/noto-sans-tc/400.css";
+@import "@fontsource/noto-sans-tc/700.css";
+
+/*
+ * Colors follow the Swiss v2 design. Every token resolves through
+ * light-dark(), so a single `color-scheme` switch flips the whole site.
+ */
+:root {
+  color-scheme: light dark;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* `dark:` follows an explicit choice first, then the system setting. */
+@custom-variant dark {
+  &:where([data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+}
+
+@theme {
+  --color-bg: light-dark(oklch(95.8% 0.007 88.6), oklch(20% 0.002 106.6));
+  --color-surface: light-dark(oklch(98.5% 0.004 91.4), oklch(23.5% 0.004 84.6));
+  --color-ink: light-dark(oklch(24.8% 0.004 84.6), oklch(93.2% 0.01 81.8));
+  --color-muted: light-dark(oklch(47.3% 0.012 81.8), oklch(70.1% 0.014 82.4));
+  --color-rule: light-dark(oklch(87.4% 0.013 86.8), oklch(31.8% 0.006 78.2));
+  --color-hover: light-dark(oklch(92.6% 0.012 84.6), oklch(25.8% 0.005 67.6));
+  --color-accent: light-dark(oklch(61.2% 0.165 34.1), oklch(73.7% 0.131 36.2));
+  --color-live: light-dark(oklch(58.6% 0.113 152.4), oklch(76.7% 0.131 152.4));
+
+  --font-sans: "Archivo Variable", "Noto Sans TC", ui-sans-serif, system-ui, sans-serif;
+  --font-cjk: "Noto Sans TC", "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  html:lang(zh-Hant-TW) {
+    font-family: var(--font-cjk);
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+}
+
+@utility display {
+  font-family: "Archivo Variable", "Noto Sans TC", sans-serif;
+  font-weight: 850;
+  font-stretch: 72%;
+  text-transform: uppercase;
+  line-height: 0.86;
+}
+
+@utility meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+
+@utility link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  &:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+/* Index rows widen their name on hover/focus using the variable width axis. */
+.index-row .index-name {
+  transition:
+    font-stretch 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    letter-spacing 0.35s;
+}
+.index-row:is(:hover, :focus-visible, [data-active]) .index-name {
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+}
+.index-row .index-arrow {
+  transition: transform 0.3s;
+}
+.index-row:is(:hover, :focus-visible) .index-arrow {
+  transform: translateX(6px);
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ticker {
+  animation: ticker 40s linear infinite;
+}
+
+@keyframes pulse-dot {
+  50% {
+    opacity: 0.35;
+  }
+}
+.pulse-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@supports (animation-timeline: view()) {
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+    }
+  }
+  .reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker,
+  .pulse-dot,
+  .reveal {
+    animation: none;
+  }
+  .index-row .index-name,
+  .index-row .index-arrow {
+    transition: none;
+  }
+}

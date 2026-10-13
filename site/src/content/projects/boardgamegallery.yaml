@@ -1,0 +1,13 @@
+order: 6
+tier: shipped
+name: Board Game Gallery
+tagline:
+  en: "Turn a spreadsheet of board games into a shareable gallery."
+  zh-tw: "把桌遊試算表變成可分享的展示頁。"
+status: live
+year: "2023"
+stack: ["SolidStart"]
+links:
+  try: https://boardgames.0x148.com
+  source: https://github.com/progamesigner/boardgamegallery
+cover: ../../assets/projects/boardgames.png

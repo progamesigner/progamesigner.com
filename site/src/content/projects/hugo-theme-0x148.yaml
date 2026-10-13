@@ -1,0 +1,12 @@
+order: 13
+tier: misc
+name: hugo-theme-0x148
+tagline:
+  en: "The theme behind my blog."
+  zh-tw: "部落格使用的 Hugo 主題。"
+status: maintained
+year: "2019—"
+stack: ["Hugo"]
+links:
+  try: https://theme.0x148.com
+  source: https://github.com/progamesigner/hugo-theme-0x148

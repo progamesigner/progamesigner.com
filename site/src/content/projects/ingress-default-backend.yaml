@@ -1,0 +1,11 @@
+order: 14
+tier: misc
+name: ingress-default-backend
+tagline:
+  en: "A clean fallback page for requests no Kubernetes service handles."
+  zh-tw: "Kubernetes 沒有服務接手時的預設頁。"
+status: maintained
+year: "2020"
+stack: ["Rust"]
+links:
+  source: https://github.com/progamesigner/ingress-default-backend

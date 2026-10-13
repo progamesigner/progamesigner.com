@@ -1,0 +1,11 @@
+order: 4
+tier: featured
+name: Homelab
+tagline:
+  en: "An entire home lab, rebuildable from code."
+  zh-tw: "整個 home lab 都能從程式碼重建。"
+status: maintained
+year: "2019—"
+stack: ["Kubernetes", "Ansible"]
+links:
+  source: https://github.com/progamesigner/manifests

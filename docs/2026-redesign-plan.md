@@ -250,11 +250,20 @@ accent 備選：鼠尾草綠 `#5E7F6B`、灰藍 `#4F6D8F`、赭黃 `#B8862E`，�
 
 ### M1 新站骨架（新 branch，不動正式站）
 
-- [ ] 建立 Astro 專案，Tailwind CSS 4，TypeScript strict，Biome。
-- [ ] i18n 路由 `/`、`/zh-tw/`，與現網址一致。
-- [ ] 移植 favicon、`static/` 圖檔；OG 圖改 1200×630。
-- [ ] GitHub Actions：build、型別檢查、連結檢查、Lighthouse CI。
-- [ ] 只用 Netlify deploy preview 驗證，不改 production 設定。
+新站放在 `site/` 子目錄（Astro 7、Tailwind CSS 4、TypeScript strict、Biome 2）。根目錄的 Hugo 專案與 `netlify.toml` 維持原狀，正式站不受影響；上線時（M5）再把 `site/` 移到根目錄或改 Netlify base。
+
+- [x] 建立 Astro 專案，Tailwind CSS 4，TypeScript strict，Biome。
+- [x] i18n 路由 `/`、`/zh-tw/`，與現網址一致；語言切換保留目前路徑。
+- [x] 移植 favicon；OG 圖改 1200×630（`site/public/og.png`，Swiss v2 樣式）。
+- [x] 首頁、作品索引（hover／focus 換預覽）、聯絡區、個案頁（Bragi 為正式內容，其餘三篇為 `draft: true` 的預留稿）、404、robots.txt、sitemap（排除草稿）。
+- [x] 深淺色（`light-dark()` + OKLCH token、跟隨系統、可手動切換）、View Transitions、可變字型 hover、scroll-driven 淡入，皆遵守 `prefers-reduced-motion`。
+- [x] GA4：只在 production 且設定 `PUBLIC_GA_ID` 時經 Partytown 載入；換頁時手動送 `page_view`。
+- [x] 公鑰 `site/public/pgp.asc` 只含有效金鑰。
+- [x] GitHub Actions（`.github/workflows/site.yml`）：`astro check`、Biome、build、上傳 `dist`。
+- [ ] 連結檢查、Lighthouse CI。
+- [ ] Netlify deploy preview：需使用者決定是否為此 branch 開啟（見下）。
+
+2026-10-13 本機驗證：`astro check` 0 錯誤、Biome 通過、11 頁 build 成功；Playwright 確認 hover 預覽切換、深淺色切換、client router 換頁正常，無 console 錯誤。
 
 完成條件：deploy preview 可開，CI 綠燈。
 

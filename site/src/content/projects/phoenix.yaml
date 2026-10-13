@@ -1,0 +1,11 @@
+order: 12
+tier: misc
+name: phoenix
+tagline:
+  en: "A cleaner, single-bar look for Firefox."
+  zh-tw: "更乾淨的 Firefox 單列外觀。"
+status: maintained
+year: "2024"
+stack: ["CSS"]
+links:
+  source: https://github.com/progamesigner/phoenix
