@@ -13,9 +13,12 @@
     "url": "git+https://github.com/progamesigner/progamesigner.com.git"
   },
   "scripts": {
-    "deploy": "hugo --buildDrafts --buildFuture --environment development",
+    "deploy": "wrangler deploy",
     "deploy:prod": "hugo --environment production --enableGitInfo --minify",
-    "deploy:watch": "hugo serve --buildDrafts --buildFuture --environment development"
+    "deploy:watch": "hugo serve --buildDrafts --buildFuture --environment development",
+    "build:dev": "hugo --buildDrafts --buildFuture --environment development",
+    "build": "npm run deploy:prod",
+    "preview": "wrangler dev --local"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^4.0.3",
@@ -27,6 +30,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^5.0.0",
-    "postcss-cli": "^8.3.1"
+    "postcss-cli": "^8.3.1",
+    "wrangler": "^4.151.0"
   }
 }

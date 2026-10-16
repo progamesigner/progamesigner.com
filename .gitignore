@@ -2,3 +2,8 @@ node_modules
 public
 resources
 .hugo_build.lock
+
+# Local Wrangler state and credentials
+.wrangler/
+.dev.vars*
+.env*
