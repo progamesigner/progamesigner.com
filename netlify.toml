@@ -1,8 +1,0 @@
-[build]
-base = "/"
-command = "npm run deploy:prod"
-publish = "public"
-
-[build.environment]
-HUGO_VERSION = "0.170.1"
-NODE_VERSION = "24"
