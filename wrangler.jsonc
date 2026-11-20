@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "progamesigner-com",
+  "name": "progamesigner",
   "compatibility_date": "2026-10-16",
   "workers_dev": false,
   "preview_urls": true,
